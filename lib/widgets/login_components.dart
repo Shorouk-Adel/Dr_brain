@@ -38,6 +38,7 @@ Widget CustomTextForm(
       required String label,
       required Function() onTap,
       Function(String?)? onChange,
+
       bool isPassword = false,
       String? Function(String?)? validate,
       IconData? preIcon,
@@ -54,6 +55,7 @@ Widget CustomTextForm(
     autofocus: AutoFocus,
     obscureText: isPassword,
     keyboardType: keyboardType,
+
     validator: validate,
     //onTap: onTap,
     onChanged: onChange,

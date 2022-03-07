@@ -197,14 +197,14 @@ class DoctorSignUp extends StatelessWidget {
                               ),
                               CustomButton(
                                 function: () {
-                                  if (formKey.currentState!.validate()) {
+                              /*    if (formKey.currentState!.validate()) {
                                     myCubit.userSignUp(
                                       name: nameController.text,
                                         email: emailController.text,
                                         password: passwordController.text,
                                         endPoint: signUpEndpoint,
                                         context: context);
-                                  }
+                                  }*/
 
                                   //just for testing
                                   // Navigator.push(context, MaterialPageRoute(

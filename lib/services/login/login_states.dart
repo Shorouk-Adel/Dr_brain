@@ -16,5 +16,9 @@ class SignUpSuccessState extends LoginState{}
 
 class SignUpErrorState extends LoginState {}
 
+class ImageUploadSuccessState extends LoginState {}
+
+class ImageUploadErrorState extends LoginState {}
+
 
 class IsPasswordState extends LoginState{}

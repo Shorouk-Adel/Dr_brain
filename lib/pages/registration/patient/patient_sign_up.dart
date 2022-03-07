@@ -2,6 +2,9 @@ import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:graduation_dr_brain/helpers/constants.dart';
+import 'package:graduation_dr_brain/pages/registration/patient/complete_patient.dart';
+import 'package:graduation_dr_brain/pages/registration/patient/patient_login.dart';
 import 'package:graduation_dr_brain/services/login/login_cubit.dart';
 import 'package:graduation_dr_brain/services/login/login_states.dart';
 import 'package:graduation_dr_brain/widgets/login_components.dart';
@@ -197,20 +200,24 @@ class PatientSignUp extends StatelessWidget {
                               ),
                               CustomButton(
                                 function: () {
-                                  if (formKey.currentState!.validate()) {
+                                /*  if (formKey.currentState!.validate()) {
                                     myCubit.userSignUp(
                                       name: nameController.text,
                                         email: emailController.text,
                                         password: passwordController.text,
                                         endPoint: signUpEndpoint,
                                         context: context);
-                                  }
-
+                                  }*/
+                                  Navigator.push(context,
+                                    MaterialPageRoute(builder: (BuildContext context) =>
+                                        CompletePatient(nameController.text, emailController.text,passwordController.text, SIGNUP_PATIENT_ENDPOINT),
+                                    ),
+                                  );
                                   //just for testing
                                   // Navigator.push(context, MaterialPageRoute(
                                   //     builder: (BuildContext context) =>  AppLayout()));
                                 },
-                                text: 'SignUp',
+                                text: 'Next',
                                 isUpperCase: true,
                               ),
 
@@ -220,15 +227,15 @@ class PatientSignUp extends StatelessWidget {
                               Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
-                                  Text('Don\'t have an account?'),
+                                  Text('Already have an account?'),
                                   TextButton(
                                       onPressed: () {
-                                        /* Navigator.push(context,
-                                MaterialPageRoute(builder: (BuildContext context) => SignUp(),
+                                        Navigator.push(context,
+                                MaterialPageRoute(builder: (BuildContext context) => PatientLogin(LOGIN_PATIENT_ENDPOINT),
                                 ),
-                              );*/
+                              );
                                       },
-                                      child: Text('SignUp')),
+                                      child: Text('Log in')),
                                 ],
                               ),
                             ],
