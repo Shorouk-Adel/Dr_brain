@@ -8,8 +8,6 @@ import 'package:image_picker/image_picker.dart';
 import 'dart:async';
 import 'dart:io';
 
-
-
 class CompletePatient extends StatelessWidget {
   String pName;
   String pEmail;
