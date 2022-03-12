@@ -23,7 +23,7 @@ class PatientLogin extends StatelessWidget {
       create: (BuildContext context) => LoginCubit(),
       child: BlocConsumer<LoginCubit, LoginState>(
         listener: (context, state) {
-        /*  if (state is LoginSuccessState) {
+          /*  if (state is LoginSuccessState) {
             print('el mafrod yshtghal');
             CacheHelper.saveData(
               key: 'token',
@@ -43,7 +43,6 @@ class PatientLogin extends StatelessWidget {
         builder: (context, state) {
           LoginCubit myCubit = LoginCubit.get(context);
           return Scaffold(
-            backgroundColor: Colors.white,
             appBar: AppBar(
               elevation: 0,
               backgroundColor: Colors.white,
@@ -68,17 +67,17 @@ class PatientLogin extends StatelessWidget {
                               "Log In",
                               style: TextStyle(
                                   color: Colors.deepPurple,
-                                  fontSize: 35,
+                                  fontSize: 40,
                                   fontWeight: FontWeight.bold),
                             ),
                             SizedBox(
-                              height: 15,
+                              height: 20,
                             ),
                             Text(
                               "If you are already a member you can login with your email address and password.",
                               style: TextStyle(
                                   color: Colors.black38,
-                                  fontSize: 15,
+                                  fontSize: 18,
                                   fontWeight: FontWeight.normal),
                             ),
                           ],
@@ -86,12 +85,12 @@ class PatientLogin extends StatelessWidget {
                       ),
                     ),
                     const SizedBox(
-                      height: 40,
+                      height: 50,
                     ),
                     Container(
                       alignment: Alignment.center,
                       child: SizedBox(
-                        width: 290,
+                        width: 300,
                         child: Form(
                           key: formKey,
                           child: Column(
@@ -138,24 +137,24 @@ class PatientLogin extends StatelessWidget {
                                     prefixIcon: Icon(Icons.lock),
                                     suffix: myCubit.isPassword
                                         ? IconButton(
-                                            onPressed: () {
-                                              myCubit
-                                                  .changePasswordVisibility();
-                                            },
-                                            icon: Icon(myCubit.suffixIcon),
-                                          )
+                                      onPressed: () {
+                                        myCubit
+                                            .changePasswordVisibility();
+                                      },
+                                      icon: Icon(myCubit.suffixIcon),
+                                    )
                                         : IconButton(
-                                            onPressed: () {
-                                              myCubit
-                                                  .changePasswordVisibility();
-                                            },
-                                            icon: Icon(
-                                              Icons.visibility_outlined,
-                                            ),
-                                          ),
+                                      onPressed: () {
+                                        myCubit
+                                            .changePasswordVisibility();
+                                      },
+                                      icon: Icon(
+                                        Icons.visibility_outlined,
+                                      ),
+                                    ),
                                     border: OutlineInputBorder(
                                         borderRadius:
-                                            BorderRadius.circular(25.0)),
+                                        BorderRadius.circular(25.0)),
                                   ),
                                 ),
                               ),
@@ -208,10 +207,10 @@ class PatientLogin extends StatelessWidget {
                                   Text('Don\'t have an account?'),
                                   TextButton(
                                       onPressed: () {
-                                         Navigator.push(context,
-                                MaterialPageRoute(builder: (BuildContext context) => PatientSignUp(SIGNUP_PATIENT_ENDPOINT),
-                                ),
-                              );
+                                        Navigator.push(context,
+                                          MaterialPageRoute(builder: (BuildContext context) => PatientSignUp(SIGNUP_PATIENT_ENDPOINT),
+                                          ),
+                                        );
                                       },
                                       child: Text('SignUp')),
                                 ],

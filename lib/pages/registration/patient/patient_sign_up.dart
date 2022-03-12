@@ -1,30 +1,40 @@
-import 'dart:convert';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:graduation_dr_brain/helpers/constants.dart';
-import 'package:graduation_dr_brain/pages/registration/patient/complete_patient.dart';
-import 'package:graduation_dr_brain/pages/registration/patient/patient_login.dart';
 import 'package:graduation_dr_brain/services/login/login_cubit.dart';
 import 'package:graduation_dr_brain/services/login/login_states.dart';
 import 'package:graduation_dr_brain/widgets/login_components.dart';
+import 'package:image_picker/image_picker.dart';
+import 'dart:async';
+import 'dart:io';
 
-class PatientSignUp extends StatelessWidget {
-  String signUpEndpoint;
 
-  PatientSignUp(this.signUpEndpoint, {Key? key}) : super(key: key);
 
-  var emailController = TextEditingController();
-  var nameController = TextEditingController();
-  var passwordController = TextEditingController();
+class CompletePatient extends StatelessWidget {
+  String pName;
+  String pEmail;
+  String pPassword;
+  String pSignUpEndPoint;
+
+  CompletePatient(this.pName,this.pEmail,this.pPassword,this.pSignUpEndPoint,{Key? key}) : super(key: key);
+  var ssnController = TextEditingController();
+  var userNameController = TextEditingController();
+  var phoneController = TextEditingController();
+  var locationController = TextEditingController();
+  var birthdateController = TextEditingController();
+
+  List list=["Male", "Female"];
+  String? valueChoosed;
   var formKey = GlobalKey<FormState>();
+  XFile? myImage ;
+  final ImagePicker _picker = ImagePicker();
 
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (BuildContext context) => LoginCubit(),
       child: BlocConsumer<LoginCubit, LoginState>(
         listener: (context, state) {
-         /* if (state is SignUpSuccessState) {
+          /* if (state is SignUpSuccessState) {
             print('el mafrod yshtghal');
             CacheHelper.saveData(
               key: 'token',
@@ -65,28 +75,76 @@ class PatientSignUp extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: const [
                             Text(
-                              "Sign Up",
+                              "Complete your profile data",
                               style: TextStyle(
                                   color: Colors.deepPurple,
-                                  fontSize: 40,
+                                  fontSize: 30,
                                   fontWeight: FontWeight.bold),
                             ),
                             SizedBox(
-                              height: 20,
+                              height: 10,
                             ),
-                            Text(
-                              "Sign Up now",
-                              style: TextStyle(
-                                  color: Colors.black38,
-                                  fontSize: 18,
-                                  fontWeight: FontWeight.normal),
+                            Padding(
+                              padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
+                              child: Text(
+                                "This data is kept and only the doctor sees this data,this data will help in the diagnosis process",
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                    color: Colors.black38,
+                                    fontSize: 15,
+                                    fontWeight: FontWeight.normal),
+                              ),
                             ),
                           ],
                         ),
                       ),
+                    ),  const Padding(
+                      padding: EdgeInsets.fromLTRB(20, 30, 0, 0),
+                      child: Text(
+                        "Your Photo",
+                        style: TextStyle(
+                          fontSize: 20,
+                        ),
+                      ),
                     ),
-                    const SizedBox(
-                      height: 50,
+                    Padding(
+                      padding: const EdgeInsets.fromLTRB(20, 10, 0, 20),
+                      child: InkWell(
+                        onTap: ()  async {
+                          // Pick an image
+                          myImage = await _picker.pickImage(source: ImageSource.gallery);
+                        },
+                        child: SizedBox(
+                          width: 150,
+                          height: 100,
+                          child: Card(
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(10),
+                              // if you need this
+                              side: BorderSide(
+                                color: Colors.grey.withOpacity(0.2),
+                                width: 1,
+                              ),
+                            ),
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: const [
+                                Icon(
+                                  Icons.upload,
+                                  color: Colors.deepPurple,
+                                ),
+                                SizedBox(
+                                  height: 10,
+                                ),
+                                Text(
+                                  "Browse to upload",
+                                  style: TextStyle(color: Colors.deepPurple),
+                                )
+                              ],
+                            ),
+                          ),
+                        ),
+                      ),
                     ),
                     Container(
                       alignment: Alignment.center,
@@ -98,14 +156,14 @@ class PatientSignUp extends StatelessWidget {
                             children: [
                               CustomTextForm(
                                 context,
-                                controller: nameController,
+                                controller: userNameController,
                                 keyboardType: TextInputType.emailAddress,
-                                label: 'Name',
+                                label: 'User Name',
                                 onTap: () {},
                                 preIcon: Icons.drive_file_rename_outline,
                                 validate: (String? value) {
                                   if (value == null || value.isEmpty) {
-                                    return 'The name field is required';
+                                    return 'The user name field is required';
                                   } else
                                     return null;
                                 },
@@ -115,128 +173,151 @@ class PatientSignUp extends StatelessWidget {
                               ),
                               CustomTextForm(
                                 context,
-                                controller: emailController,
+                                controller: ssnController,
                                 keyboardType: TextInputType.emailAddress,
-                                label: 'Email address',
+                                label: 'SSN',
                                 onTap: () {},
-                                preIcon: Icons.email_outlined,
+                                preIcon: Icons.credit_card_outlined,
                                 validate: (value) {
                                   if (value == null || value.isEmpty) {
                                     return 'Please enter some text';
-                                  } else if (!value.contains('@')) {
-                                    return 'your email address must contain @ sign ';
                                   }
-                                  return null;
-                                },
+                                  else {
+                                    return null;
+                                  }},
                               ),
                               SizedBox(
                                 height: 15.0,
                               ),
-                              //password form field
+                              CustomTextForm(
+                                context,
+                                controller: phoneController,
+                                keyboardType: TextInputType.emailAddress,
+                                label: 'Phone',
+                                onTap: () {},
+                                preIcon: Icons.sim_card_outlined,
+                                validate: (value) {
+                                  if (value == null || value.isEmpty) {
+                                    return 'Please enter some text';
+                                  }
+                                  else {
+                                    return null;
+                                  }},
+                              ),
                               SizedBox(
-                                height: 60,
-                                width: 500,
-                                child: TextFormField(
-                                  controller: passwordController,
-                                  validator: (value) {
-                                    if (value == null || value.isEmpty) {
-                                      return 'Please enter some text';
-                                    } else
-                                      /*if (value.toString().length!=8) {
-                          return 'your password must be at least 8 characters';
-                        }*/
-                                      return null;
+                                height: 15.0,
+                              ),
+
+                              Container(
+                                padding: EdgeInsets.fromLTRB(10, 5, 10, 5),
+                                decoration: BoxDecoration(
+                                  border: Border.all(color: Colors.grey, width: 1),
+                                  borderRadius: BorderRadius.circular(15),
+                                ),
+                                child: DropdownButton(
+                                  hint: const Text("Select Gender"),
+                                  value: valueChoosed,
+                                  isExpanded: true,
+                                  onChanged: (newValue) {
+
+                                    valueChoosed = newValue as String?;
+
                                   },
-                                  keyboardType: TextInputType.visiblePassword,
-                                  obscureText: myCubit.isPassword,
-                                  decoration: InputDecoration(
-                                    labelText: 'Password',
-                                    hintText: 'Type your password',
-                                    prefixIcon: Icon(Icons.lock),
-                                    suffix: myCubit.isPassword
-                                        ? IconButton(
-                                      onPressed: () {
-                                        myCubit
-                                            .changePasswordVisibility();
-                                      },
-                                      icon: Icon(myCubit.suffixIcon),
-                                    )
-                                        : IconButton(
-                                      onPressed: () {
-                                        myCubit
-                                            .changePasswordVisibility();
-                                      },
-                                      icon: Icon(
-                                        Icons.visibility_outlined,
-                                      ),
-                                    ),
-                                    border: OutlineInputBorder(
-                                        borderRadius:
-                                        BorderRadius.circular(25.0)),
-                                  ),
+                                  items: list.map((valueItem) {
+                                    return DropdownMenuItem(
+                                      value: valueItem,
+                                      child: Text(valueItem),
+                                    );
+                                  }).toList(),
                                 ),
                               ),
-                              Row(
-                                children: [
-                                  Switch(
-                                    value: false,
-                                    onChanged: (bool value) {},
-                                  ),
-                                  Text("Remember Me"),
-                                  Column(
-                                    mainAxisAlignment: MainAxisAlignment.end,
-                                    crossAxisAlignment: CrossAxisAlignment.end,
-                                    children: [
-                                      TextButton(
-                                        onPressed: () {},
-                                        child: Text("Forget Password ?"),
-                                      ),
-                                    ],
-                                  ),
-                                ],
+                              SizedBox(
+                                height: 15.0,
                               ),
+                              CustomTextForm(
+                                context,
+                                controller: locationController,
+                                keyboardType: TextInputType.emailAddress,
+                                label: 'Location',
+                                onTap: () {},
+                                preIcon: Icons.credit_card_outlined,
+                                validate: (value) {
+                                  if (value == null || value.isEmpty) {
+                                    return 'Please enter some text';
+                                  }
+                                  else {
+                                    return null;
+                                  }},
+                              ),
+                              SizedBox(
+                                height: 15.0,
+                              ),
+                              // Container(
+                              //   decoration: BoxDecoration(
+                              //     border: Border.all(color: Colors.grey, width: 1),
+                              //     borderRadius: BorderRadius.circular(15),
+                              //   ),
+                              //   child: ExpansionTile(
+                              //     title: Text("BirthDay"),
+                              //     leading: Icon(Icons.date_range),
+                              //     children: [
+                              //       SfDateRangePicker(
+                              //         view: DateRangePickerView.month,
+                              //         selectionMode:
+                              //         DateRangePickerSelectionMode.single,
+                              //       ),
+                              //     ],
+                              //   ),
+                              // ),
+                              Container(
+                                child:  CustomTextForm(
+                                  context,
+                                  controller: birthdateController,
+                                  keyboardType: TextInputType.emailAddress,
+                                  label: 'BirthDate (YYYY-MM-DD)',
+                                  onTap: () {},
+                                  preIcon: Icons.credit_card_outlined,
+                                  validate: (value) {
+                                    if (value == null || value.isEmpty) {
+                                      return 'Please enter some text';
+                                    }
+                                    else {
+                                      return null;
+                                    }},
+                                ),
+                              ),
+
                               const SizedBox(
                                 height: 40,
                               ),
                               CustomButton(
                                 function: () {
-                                /*  if (formKey.currentState!.validate()) {
+                                  if (formKey.currentState!.validate()) {
                                     myCubit.userSignUp(
-                                      name: nameController.text,
-                                        email: emailController.text,
-                                        password: passwordController.text,
-                                        endPoint: signUpEndpoint,
+                                        name: pName,
+                                        email: pEmail,
+                                        password: pPassword,
+                                        endPoint: pSignUpEndPoint,
+                                        sSN: ssnController.text,
+                                        userName: userNameController.text,
+                                        //gender: valueChoosed! ,
+                                        phone: phoneController.text,
+                                       // birthdate: birthdateController.text,
+                                        location:locationController.text ,
+                                        image: myImage as XFile,
                                         context: context);
-                                  }*/
-                                  Navigator.push(context,
-                                    MaterialPageRoute(builder: (BuildContext context) =>
-                                        CompletePatient(nameController.text, emailController.text,passwordController.text, SIGNUP_PATIENT_ENDPOINT),
-                                    ),
-                                  );
+                                  }
+
                                   //just for testing
                                   // Navigator.push(context, MaterialPageRoute(
                                   //     builder: (BuildContext context) =>  AppLayout()));
                                 },
-                                text: 'Next',
+                                text: 'SignUp',
                                 isUpperCase: true,
                               ),
 
                               SizedBox(
                                 height: 15.0,
-                              ),
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Text('Already have an account?'),
-                                  TextButton(
-                                      onPressed: () {
-                                        Navigator.push(context,
-                                MaterialPageRoute(builder: (BuildContext context) => PatientLogin(LOGIN_PATIENT_ENDPOINT),
-                                ),
-                              );
-                                      },
-                                      child: Text('Log in')),
-                                ],
                               ),
                             ],
                           ),
