@@ -4,7 +4,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:graduation_dr_brain/services/login/login_cubit.dart';
 import 'package:graduation_dr_brain/services/login/login_states.dart';
 import 'package:graduation_dr_brain/widgets/login_components.dart';
-import 'package:syncfusion_flutter_datepicker/datepicker.dart';
 import 'package:image_picker/image_picker.dart';
 import 'dart:async';
 import 'dart:io';
@@ -27,8 +26,9 @@ class CompletePatient extends StatelessWidget {
    List list=["Male", "Female"];
    String? valueChoosed;
   var formKey = GlobalKey<FormState>();
-   XFile? myImage ;
-  final ImagePicker _picker = ImagePicker();
+   File? image ;
+  final  _picker = ImagePicker();
+  bool showSpinner= false;
 
   Widget build(BuildContext context) {
     return BlocProvider(
@@ -113,7 +113,7 @@ class CompletePatient extends StatelessWidget {
                       child: InkWell(
                         onTap: ()  async {
                           // Pick an image
-                           myImage = await _picker.pickImage(source: ImageSource.gallery);
+
                         },
                         child: SizedBox(
                           width: 150,
@@ -294,19 +294,20 @@ class CompletePatient extends StatelessWidget {
                               CustomButton(
                                 function: () {
                                   if (formKey.currentState!.validate()) {
-                                    myCubit.userSignUp(
-                                        name: pName,
-                                        email: pEmail,
-                                        password: pPassword,
-                                        endPoint: pSignUpEndPoint,
-                                        sSN: ssnController.text,
-                                        userName: userNameController.text,
-                                       gender: valueChoosed! ,
-                                        phone: phoneController.text,
-                                        birthdate: birthdateController.text,
-                                        location:locationController.text ,
-                                        image: myImage as XFile,
-                                        context: context);
+                                    // myCubit.userSignUp(
+                                    //     name: pName,
+                                    //     email: pEmail,
+                                    //     password: pPassword,
+                                    //     endPoint: pSignUpEndPoint,
+                                    //     sSN: ssnController.text,
+                                    //     userName: userNameController.text,
+                                    //   // gender: valueChoosed! ,
+                                    //     phone: phoneController.text,
+                                    //   //  birthdate: birthdateController.text,
+                                    //     location:locationController.text ,
+                                    //     image: image as XFile,
+                                    //     context: context);
+                                    myCubit.uploadImage();
                                   }
 
                                   //just for testing

@@ -43,6 +43,7 @@ class PatientLogin extends StatelessWidget {
         builder: (context, state) {
           LoginCubit myCubit = LoginCubit.get(context);
           return Scaffold(
+            backgroundColor: Colors.white,
             appBar: AppBar(
               elevation: 0,
               backgroundColor: Colors.white,
@@ -67,17 +68,17 @@ class PatientLogin extends StatelessWidget {
                               "Log In",
                               style: TextStyle(
                                   color: Colors.deepPurple,
-                                  fontSize: 40,
+                                  fontSize: 35,
                                   fontWeight: FontWeight.bold),
                             ),
                             SizedBox(
-                              height: 20,
+                              height: 15,
                             ),
                             Text(
                               "If you are already a member you can login with your email address and password.",
                               style: TextStyle(
                                   color: Colors.black38,
-                                  fontSize: 18,
+                                  fontSize: 15,
                                   fontWeight: FontWeight.normal),
                             ),
                           ],
@@ -85,12 +86,12 @@ class PatientLogin extends StatelessWidget {
                       ),
                     ),
                     const SizedBox(
-                      height: 50,
+                      height: 40,
                     ),
                     Container(
                       alignment: Alignment.center,
                       child: SizedBox(
-                        width: 300,
+                        width: 290,
                         child: Form(
                           key: formKey,
                           child: Column(

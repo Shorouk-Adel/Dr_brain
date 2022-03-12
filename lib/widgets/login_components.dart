@@ -55,7 +55,6 @@ Widget CustomTextForm(
     autofocus: AutoFocus,
     obscureText: isPassword,
     keyboardType: keyboardType,
-
     validator: validate,
     //onTap: onTap,
     onChanged: onChange,

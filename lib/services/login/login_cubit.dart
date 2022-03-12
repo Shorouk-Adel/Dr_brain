@@ -68,9 +68,9 @@ class LoginCubit extends Cubit<LoginState> {
       required String endPoint,
       required String userName,
       required String sSN,
-      required String gender,
+     // required String gender,
       required String location,
-      required String birthdate,
+     // required String birthdate,
       required String phone,
       required XFile image,
 
@@ -90,8 +90,8 @@ class LoginCubit extends Cubit<LoginState> {
         'full_name': userName,
         'phone': phone,
         'ssn': sSN,
-        'birth_date': "2000-11-27",
-        'gender': "male",
+        //'birth_date': "2000-11-27",
+       // 'gender': "male",
         'location': location,
         'avatar': image.path
       }),
@@ -133,5 +133,29 @@ class LoginCubit extends Cubit<LoginState> {
     suffixIcon =
         isPassword ? Icons.visibility_off_outlined : Icons.visibility_outlined;
     emit(IsPasswordState());
+  }
+  uploadImage() async{
+    var request=http.MultipartRequest("POST",
+        Uri.parse('https://dr-brains.com/api/patient_registeration'));
+    request.fields['name']="dummyImage";
+    request.fields['email']="dummyImage@gmail.com";
+    request.fields['password']="dummyImage";
+    request.fields['full_name']="dummyImage";
+    request.fields['phone']="01002564741";
+    request.fields['ssn']="12345678912349";
+    request.fields['birth_date']="2000-11-11";
+    request.fields['gender']="male";
+    request.fields['location']="dummyImage";
+    var picture= http.MultipartFile.fromBytes('avatar', (await rootBundle.load('assets/patient.png')).buffer.asUint8List(),
+        filename: 'patient.png'
+    );
+    request.files.add(picture);
+    var response=await request.send().then((value) {
+      if (value.statusCode == 200) print("Uploaded!");
+    });
+    var responseData= await response.stream.toBytes();
+    var result= String.fromCharCodes(responseData);
+    print(result);
+    
   }
 }

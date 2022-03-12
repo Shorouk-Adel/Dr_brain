@@ -31,6 +31,7 @@ class _IdentityState extends State<Identity> {
         primarySwatch: Colors.deepPurple,
       ),
       home: Scaffold(
+        backgroundColor: Colors.white,
           appBar: AppBar(
             backgroundColor: Colors.white,
             elevation: 0,
@@ -50,7 +51,7 @@ class _IdentityState extends State<Identity> {
                         "Select Registeration Profile",
                         style: TextStyle(
                             color: Colors.deepPurple,
-                            fontSize: 30,
+                            fontSize: 22,
                             fontWeight: FontWeight.bold),
                       ),
                       SizedBox(
@@ -60,7 +61,7 @@ class _IdentityState extends State<Identity> {
                         "Choose who you are ",
                         style: TextStyle(
                             color: Colors.black38,
-                            fontSize: 25,
+                            fontSize: 18,
                             fontWeight: FontWeight.normal),
                       ),
                     ],
@@ -68,7 +69,7 @@ class _IdentityState extends State<Identity> {
                 ),
               ),
               const SizedBox(
-                height: 40,
+                height: 33,
               ),
               ListView.builder(
                   scrollDirection: Axis.vertical,
@@ -99,37 +100,10 @@ class _IdentityState extends State<Identity> {
                         });
                       },
                       child: SizedBox(
-                          height: 200, child: CustomRadio(Profiles[index])),
+                          height: 180,child: CustomRadio(Profiles[index])),
                     );
                   }),
-             /* InkWell(
-                onTap: () {},
-                child: Container(
-                  padding: EdgeInsets.symmetric(horizontal: 30.0, vertical: 10),
-                  decoration:
-                      BoxDecoration(borderRadius: BorderRadius.circular(35.0)),
-                  child: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: const [
-                      Text(
-                        "Next",
-                        style: TextStyle(
-                          fontSize: 16.0,
-                          color: Colors.deepPurple,
-                        ),
-                      ),
-                      SizedBox(
-                        width: 15.0,
-                      ),
 
-                      Icon(
-                        Icons.arrow_forward_sharp,
-                        color: Colors.deepPurple,
-                      )
-                    ],
-                  ),
-                ),
-              ),*/
             ],
           )),
     );

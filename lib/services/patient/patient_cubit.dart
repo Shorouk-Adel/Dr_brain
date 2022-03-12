@@ -1,6 +1,9 @@
+import 'dart:convert';
+import 'package:http/http.dart' as http;
 import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:graduation_dr_brain/helpers/constants.dart';
 import 'package:graduation_dr_brain/pages/doctor/appointment.dart';
 import 'package:graduation_dr_brain/pages/doctor/doctor_home.dart';
 import 'package:graduation_dr_brain/pages/patient/appointments.dart';
@@ -43,7 +46,7 @@ class PatientCubit extends Cubit<PatientStates> {
 
     BottomNavigationBarItem(
         icon: Icon(Icons.message_outlined),
-        label: 'Messages'),
+        label: 'Doctors'),
 
     BottomNavigationBarItem(
         icon: Icon(Icons.person),
@@ -69,8 +72,39 @@ class PatientCubit extends Cubit<PatientStates> {
   }
   TextDirection appDirection = TextDirection.ltr;
 
+  void bookAppointment(
+      {required String time,
+        required String date,
+        required String description,}) async {
+    emit(SelectingTimeAndDate());
+    //sending data to appointment api
+    final response = await http.post(
+      Uri.parse('https://dr-brains.com/api/add-appointment'),
+      headers: <String, String>{
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer $token'
+      },
+      body: jsonEncode(<String, String>{
+        'Meeting_name':"meeting",
+        'Meeting_date': date.toString(),
+        'Meeting_time': time.toString(),
+        'Meeting_description': description,
 
 
+
+      }),
+    );
+    if (response.statusCode == 200 ) {
+      print('Congratulations,you have booked the appointment successfully');
+      emit(TimeAndDateSelected());
+
+    }
+    else {
+      emit(TimeAndDateSelectedError());
+      //showToast(text:jsonDecode(response.body)['error'] , state: ToastStates.ERROR);
+      throw Exception('Failed to bookAppointment');
+    }
+  }
 
 
 }

@@ -1,209 +1,157 @@
 import 'package:flutter/material.dart';
-import 'package:graduation_dr_brain/helpers/functions.dart';
-import 'package:graduation_dr_brain/pages/registration/patient/patient_sign_up.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:graduation_dr_brain/services/patient/patient_cubit.dart';
+import 'package:date_time_picker/date_time_picker.dart';
+import 'package:graduation_dr_brain/services/patient/patient_states.dart';
 import 'package:graduation_dr_brain/widgets/login_components.dart';
-/*
+import 'package:intl/intl.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 
-class BookAppointment extends StatefulWidget {
-  const BookAppointment({Key? key}) : super(key: key);
+class BookAppointment extends StatelessWidget {
+
+  var appointmentKey = GlobalKey<FormState>();
+  var dateController= TextEditingController(text: DateTime.now().toString());
+  var timeController= TextEditingController(text: '${TimeOfDay.now().hour.toString()}:${TimeOfDay.now().minute.toString()}');
+  var descriptionController= TextEditingController();
+  TimeOfDay time=TimeOfDay.now();
 
   @override
-  _BookAppointmentState createState() => _BookAppointmentState();
-}
-
-class _BookAppointmentState extends State<BookAppointment> {
-  var emailController = TextEditingController();
-  var passwordController = TextEditingController();
-  var formKey = GlobalKey<FormState>();
-
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.white,
-      appBar: AppBar(
-        backgroundColor: Colors.white,
-        elevation: 0.0,
-        leading: IconButton(
-          onPressed: () {
-            Navigator.pop(context);
-          },
-          icon: Icon(Icons.arrow_back_ios, color: Colors.black),
-        ),
-      ),
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.fromLTRB(0, 30, 0, 0),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Padding(
-                padding: const EdgeInsets.fromLTRB(20, 0, 0, 0),
-                child: SizedBox(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: const [
-                      Text(
-                        "Log In",
-                        style: TextStyle(
-                            color: Colors.deepPurple,
-                            fontSize: 40,
-                            fontWeight: FontWeight.bold),
-                      ),
-                      SizedBox(
-                        height: 20,
-                      ),
-                      Text(
-                        "If you are already a member you can login with your email address and password.",
-                        style: TextStyle(
-                            color: Colors.black38,
-                            fontSize: 18,
-                            fontWeight: FontWeight.normal),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-              const SizedBox(
-                height: 50,
-              ),
-              Container(
-                alignment: Alignment.center,
-                child: SizedBox(
-                  width: 300,
-                  child: Form(
-                    key: formKey,
-                    child: Column(
-                      children: [
-                        CustomTextForm(context,
-                          controller: emailController,
-                          keyboardType: TextInputType.emailAddress,
-                          label: 'Email address',
-                          onTap: (){},
-                          preIcon: Icons.email_outlined,
-                          validate: (value){
-                            if (value == null || value.isEmpty) {
-                              return 'Please enter some text';
-                            }
-                            else if (!value.contains('@')) {
-                              return 'your email address must contain @ sign ';
-                            }
-                            return null;
-                          },
-                        ),
-                        SizedBox(
-                          height: 15.0,
-                        ),
-                        //password form field
-                        SizedBox(
-                          height: 60,
-                          width: 500,
-                          child: TextFormField(
-                            controller: passwordController,
-                            validator: (value) {
-                              if (value == null || value.isEmpty) {
-                                return 'Please enter some text';
-                              }
+    return BlocProvider(
+        create: (BuildContext context) => PatientCubit(),
+        child: BlocConsumer<PatientCubit, PatientStates>(
+        listener: (context, state) {
 
-                              else /*if (value.toString().length!=8) {
-                          return 'your password must be at least 8 characters';
-                        }*/
-                                return null;
-                            },
-                            keyboardType: TextInputType.visiblePassword,
-                            obscureText: isPassword,
+    },
+    builder: (context, state) {
+    PatientCubit myCubit = PatientCubit.get(context);
+    return MaterialApp(
+      home: Scaffold(
+          backgroundColor: Colors.white,
+          appBar: AppBar(
+            backgroundColor: Colors.white,
+            elevation: 0.0,
+            title: Text('New Appointment',
+              style: TextStyle(
+                color: Colors.deepPurple,
+                fontSize: 20,
+              ),
+            ),
+            leading: IconButton(
+              onPressed: () {
+                Navigator.pop(context);
+              },
+              icon: Icon(Icons.arrow_back_ios, color: Colors.deepPurple),
+            ),
+          ),
+        body: SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.fromLTRB(0, 30, 0, 0),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(20, 0, 0, 0),
+                  child: Container(
+                    alignment: Alignment.center,
+                    child: SizedBox(
+                      width: 290,
+                      child: Form(
+                        key: appointmentKey,
+                        child: Column(
+                          children: [
+                            TextFormField(
+                              onTap:(){
+                                showDatePicker(
+                                    context: context,
+                                    initialDate: DateTime.now(),
+                                    firstDate: DateTime(2000),
+                                    lastDate: DateTime(2100));
+                              },
+                            controller: dateController,
                             decoration: InputDecoration(
+                                labelText: "Date",
+                                prefixIcon: Icon(Icons.event,color: Colors.deepPurple),
 
-                              labelText: 'Password',
-                              hintText: 'Type your password',
-                              prefixIcon: Icon(Icons.lock),
-                              suffix: isPassword ? IconButton(
-                                onPressed: () {
-                                  setState(() {
-                                    changePasswordVisibility();
-                                  });
+                            ),),
+                            SizedBox(
+                              height: 15.0,
+                            ),
+                            //password form field
+                            TextFormField(
+                              cursorColor: Colors.deepPurple,
+                              onTap:(){
+                                showTimePicker(
+                                    context: context,
+                                    initialTime:time);
+                                print(timeController.text);
 
-                                }, icon: Icon(suffixIcon),)
-                                  : IconButton(
-                                onPressed: () {
-                                  setState(() {
-                                    changePasswordVisibility();
-                                  });
-                                },
-                                icon: Icon(Icons.visibility_outlined,),
-                              ),
-                              border: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(25.0)
+                              },
+                              controller: timeController,
+                              decoration: InputDecoration(
+                                labelText: "Time",
+                                prefixIcon: Icon(Icons.access_time,color: Colors.deepPurple),
+
                               ),
                             ),
-                          ),
-                        ),
-                        Row(
-                          children: [
-                            Switch(
-                              value: false,
-                              onChanged: (bool value) {},
+                            SizedBox(
+                              height: 15.0,
                             ),
-                            Text("Remember Me"),
-                            Column(
-                              mainAxisAlignment: MainAxisAlignment.end,
-                              crossAxisAlignment: CrossAxisAlignment.end,
-                              children: [
-                                TextButton(
-                                  onPressed: () {
+                            //password form field
+                            TextFormField(
+                              cursorColor: Colors.deepPurple,
+                              maxLines: 6,
+                              onTap:(){},
+                              controller: descriptionController,
+                              decoration: InputDecoration(
+                                labelText: "Description",
+                                prefixIcon: Icon(Icons.edit,color: Colors.deepPurple),
 
-                                  },
-                                  child: Text("Forget Password ?"),
-                                ),
-                              ],
+                              ),
+                            ),
+                            const SizedBox(
+                              height: 40,
+                            ),
+
+                          /*  DateTimePicker(
+                              type: DateTimePickerType.time,
+                              //timePickerEntryModeInput: true,
+                              initialValue: '',
+                              //controller: timeController, //_initialValue,
+                              icon: Icon(Icons.access_time),
+                              timeLabelText: "Time",
+                              use24HourFormat: false,
+                            ),
+                            const SizedBox(
+                              height: 40,
+                            ),*/
+                            CustomButton(
+                              function: () {
+                                if (appointmentKey.currentState!.validate()) {
+                                  myCubit.bookAppointment(
+                                     date: dateController.text,
+                                  description: descriptionController.text,
+                                  time: timeController.text);
+                                }
+                             },
+                              text: 'Book Appointment',
+                              isUpperCase: true,
                             ),
                           ],
                         ),
-                        const SizedBox(
-                          height: 40,
-                        ),
-                        CustomButton(
-
-                          function: () {
-                            if (formKey.currentState!.validate()) {
-                              userLogin(
-                                  email: emailController.text,
-                                  password: passwordController.text,
-                                  context: context);
-                            }
-
-                            //just for testing
-                            // Navigator.push(context, MaterialPageRoute(
-                            //     builder: (BuildContext context) =>  AppLayout()));
-                          },
-                          text: 'login',
-                          isUpperCase: true,
-                        ),
-
-                        SizedBox(
-                          height: 15.0,
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Text('Don\'t have an account?'),
-                            TextButton(onPressed: (){
-                              Navigator.push(context,
-                                MaterialPageRoute(builder: (BuildContext context) => SignUp(),
-                                ),
-                              );
-                            }, child: Text('SignUp')),
-                          ],
-                        ),
-                      ],
+                      ),
                     ),
                   ),
-                ),
-              ),
-            ],
+                )
+              ],
+            ),
           ),
         ),
       ),
     );
+    },
+        ),
+    );
   }
 }
-*/

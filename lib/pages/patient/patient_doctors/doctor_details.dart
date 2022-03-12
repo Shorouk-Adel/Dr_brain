@@ -200,10 +200,10 @@ class _DoctorDetailsState extends State<DoctorDetails> {
             ),
             CustomButton(
                 function: () {
-                 /* Navigator.push(context,
+                  Navigator.push(context,
                       MaterialPageRoute(
                       builder: (BuildContext context) => BookAppointment()
-                      ));*/
+                      ));
                 },
                 text: 'Book Appointment',
                 width: 350,

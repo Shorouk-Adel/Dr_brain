@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:graduation_dr_brain/pages/patient/patient_doctors/doctors_screen.dart';
+import 'package:graduation_dr_brain/pages/patient/patient_appointments/book_appointment.dart';
+
 import 'package:graduation_dr_brain/pages/registration/identity.dart';
 
 void main() {
-  runApp(Identity());
+  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
@@ -35,7 +36,7 @@ class MyApp extends StatelessWidget {
           )
 
       ),
-     // home: Login(),
+     home: Identity(),
     );
   }
   }
