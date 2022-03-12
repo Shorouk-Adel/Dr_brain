@@ -1,9 +1,12 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:graduation_dr_brain/Network/dio_helper.dart';
 import 'package:graduation_dr_brain/pages/patient/patient_doctors/doctors_screen.dart';
 import 'package:graduation_dr_brain/pages/registration/identity.dart';
 
 void main() {
+  DioHelper.init();
   runApp(Identity());
 }
 

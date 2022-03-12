@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:graduation_dr_brain/helpers/constants.dart';
 import 'package:graduation_dr_brain/services/login/login_cubit.dart';
 import 'package:graduation_dr_brain/services/login/login_states.dart';
 import 'package:graduation_dr_brain/widgets/login_components.dart';
@@ -14,19 +15,22 @@ class CompletePatient extends StatelessWidget {
   String pPassword;
   String pSignUpEndPoint;
 
-   CompletePatient(this.pName,this.pEmail,this.pPassword,this.pSignUpEndPoint,{Key? key}) : super(key: key);
+  CompletePatient(this.pName, this.pEmail, this.pPassword, this.pSignUpEndPoint,
+      {Key? key})
+      : super(key: key);
   var ssnController = TextEditingController();
   var userNameController = TextEditingController();
   var phoneController = TextEditingController();
   var locationController = TextEditingController();
   var birthdateController = TextEditingController();
 
-   List list=["Male", "Female"];
-   String? valueChoosed;
+  List list = ["Male", "Female"];
+  String valueChoosed = "Male";
   var formKey = GlobalKey<FormState>();
-   File? image ;
-  final  _picker = ImagePicker();
-  bool showSpinner= false;
+  XFile? image;
+
+  final _picker = ImagePicker();
+  bool showSpinner = false;
 
   Widget build(BuildContext context) {
     return BlocProvider(
@@ -97,7 +101,8 @@ class CompletePatient extends StatelessWidget {
                           ],
                         ),
                       ),
-                    ),  const Padding(
+                    ),
+                    const Padding(
                       padding: EdgeInsets.fromLTRB(20, 30, 0, 0),
                       child: Text(
                         "Your Photo",
@@ -109,9 +114,9 @@ class CompletePatient extends StatelessWidget {
                     Padding(
                       padding: const EdgeInsets.fromLTRB(20, 10, 0, 20),
                       child: InkWell(
-                        onTap: ()  async {
+                        onTap: () async {
                           // Pick an image
-
+                          getImage();
                         },
                         child: SizedBox(
                           width: 150,
@@ -180,10 +185,10 @@ class CompletePatient extends StatelessWidget {
                                 validate: (value) {
                                   if (value == null || value.isEmpty) {
                                     return 'Please enter some text';
-                                  }
-                                  else {
+                                  } else {
                                     return null;
-                                  }},
+                                  }
+                                },
                               ),
                               SizedBox(
                                 height: 15.0,
@@ -198,10 +203,10 @@ class CompletePatient extends StatelessWidget {
                                 validate: (value) {
                                   if (value == null || value.isEmpty) {
                                     return 'Please enter some text';
-                                  }
-                                  else {
+                                  } else {
                                     return null;
-                                  }},
+                                  }
+                                },
                               ),
                               SizedBox(
                                 height: 15.0,
@@ -210,17 +215,16 @@ class CompletePatient extends StatelessWidget {
                               Container(
                                 padding: EdgeInsets.fromLTRB(10, 5, 10, 5),
                                 decoration: BoxDecoration(
-                                  border: Border.all(color: Colors.grey, width: 1),
+                                  border:
+                                      Border.all(color: Colors.grey, width: 1),
                                   borderRadius: BorderRadius.circular(15),
                                 ),
                                 child: DropdownButton(
-                                  hint: const Text("Select Gender"),
+                                  hint: Text(valueChoosed),
                                   value: valueChoosed,
                                   isExpanded: true,
                                   onChanged: (newValue) {
-
-                                      valueChoosed = newValue as String?;
-
+                                    valueChoosed = newValue as String;
                                   },
                                   items: list.map((valueItem) {
                                     return DropdownMenuItem(
@@ -243,10 +247,10 @@ class CompletePatient extends StatelessWidget {
                                 validate: (value) {
                                   if (value == null || value.isEmpty) {
                                     return 'Please enter some text';
-                                  }
-                                  else {
+                                  } else {
                                     return null;
-                                  }},
+                                  }
+                                },
                               ),
                               SizedBox(
                                 height: 15.0,
@@ -269,7 +273,7 @@ class CompletePatient extends StatelessWidget {
                               //   ),
                               // ),
                               Container(
-                                child:  CustomTextForm(
+                                child: CustomTextForm(
                                   context,
                                   controller: birthdateController,
                                   keyboardType: TextInputType.emailAddress,
@@ -279,10 +283,10 @@ class CompletePatient extends StatelessWidget {
                                   validate: (value) {
                                     if (value == null || value.isEmpty) {
                                       return 'Please enter some text';
-                                    }
-                                    else {
+                                    } else {
                                       return null;
-                                    }},
+                                    }
+                                  },
                                 ),
                               ),
 
@@ -292,20 +296,21 @@ class CompletePatient extends StatelessWidget {
                               CustomButton(
                                 function: () {
                                   if (formKey.currentState!.validate()) {
-                                    // myCubit.userSignUp(
-                                    //     name: pName,
-                                    //     email: pEmail,
-                                    //     password: pPassword,
-                                    //     endPoint: pSignUpEndPoint,
-                                    //     sSN: ssnController.text,
-                                    //     userName: userNameController.text,
-                                    //   // gender: valueChoosed! ,
-                                    //     phone: phoneController.text,
-                                    //   //  birthdate: birthdateController.text,
-                                    //     location:locationController.text ,
-                                    //     image: image as XFile,
-                                    //     context: context);
-                                    myCubit.uploadImage();
+                                    myCubit.register(
+                                        userImage: image!,
+                                        endPoint: SIGNUP_PATIENT_ENDPOINT,
+                                        userName: userNameController.text,
+                                        ssn: ssnController.text,
+                                        gender: valueChoosed,
+                                        location: locationController.text,
+                                        birthdate: birthdateController.text,
+                                        phone: phoneController.text,
+                                        name: pName,
+                                        email: pEmail,
+                                        password: pPassword,
+                                        context: context);
+
+                                    //myCubit.uploadImage();
                                   }
 
                                   //just for testing
@@ -332,5 +337,15 @@ class CompletePatient extends StatelessWidget {
         },
       ),
     );
+  }
+
+  Future getImage() async {
+    final pickedFile = await _picker.pickImage(source: ImageSource.gallery);
+    if (pickedFile != null) {
+      image = pickedFile;
+      print('image selected. + ' + pickedFile.path);
+    } else {
+      print('No image selected.');
+    }
   }
 }
