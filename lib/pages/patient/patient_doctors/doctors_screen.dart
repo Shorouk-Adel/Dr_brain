@@ -1,6 +1,6 @@
 import 'dart:convert';
 import 'package:graduation_dr_brain/helpers/constants.dart';
-import 'package:graduation_dr_brain/pages/patient/patient_doctors/model.dart';
+import 'package:graduation_dr_brain/Model/model.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 

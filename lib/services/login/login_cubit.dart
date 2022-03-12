@@ -140,6 +140,7 @@ class LoginCubit extends Cubit<LoginState> {
     request.fields['name']="dummyImage";
     request.fields['email']="dummyImage@gmail.com";
     request.fields['password']="dummyImage";
+    request.fields['password_confirmation']="dummyImage";
     request.fields['full_name']="dummyImage";
     request.fields['phone']="01002564741";
     request.fields['ssn']="12345678912349";

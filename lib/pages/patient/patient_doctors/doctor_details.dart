@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:graduation_dr_brain/pages/patient/patient_appointments/book_appointment.dart';
-import 'package:graduation_dr_brain/pages/patient/patient_doctors/model.dart';
+import 'package:graduation_dr_brain/Model/model.dart';
 import 'package:graduation_dr_brain/widgets/custom_card.dart';
 import 'package:graduation_dr_brain/widgets/login_components.dart';
 
