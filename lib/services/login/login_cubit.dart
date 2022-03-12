@@ -65,8 +65,6 @@ class LoginCubit extends Cubit<LoginState> {
     }
   }
 
-
-
 //changing password visibility
   bool isPassword = true;
   IconData? suffixIcon = Icons.visibility_off_outlined;
@@ -78,21 +76,20 @@ class LoginCubit extends Cubit<LoginState> {
     emit(IsPasswordState());
   }
 
-
-
   Future<dynamic> register({
-     required String password,
+    required String password,
     required String email,
-    required  String name,
-    required  context,
-    required  String endPoint,
-    required  String userName,
-    required  String ssn,
-    required  String gender,
-    required  String location,
-    required  String birthdate,
-    required  String phone,
-    required XFile userImage, }) async {
+    required String name,
+    required context,
+    required String endPoint,
+    required String userName,
+    required String ssn,
+    required String gender,
+    required String location,
+    required String birthdate,
+    required String phone,
+    required XFile userImage,
+  }) async {
     FormData data = new FormData();
     data.fields.add(MapEntry('user_name', userName));
     data.fields.add(MapEntry('email', email));
@@ -113,36 +110,28 @@ class LoginCubit extends Cubit<LoginState> {
     ));
     print(data.fields);
     print(data.files);
-    if(endPoint == SIGNUP_PATIENT_ENDPOINT){
-      DioHelper.postData(url: SIGNUP_PATIENT_ENDPOINT, data: data).then((value){
-        if (value.statusCode == 200){
-          token =  value.data['token'];
-          Navigator.push(context,
-              MaterialPageRoute(builder: (BuildContext context) => PatientLayout()));
-        }else if (value.statusCode == 422){
-          //show message Error
-          print("The given data was invalid.");
-        }else{
-          print("error mn3rfaosh .");
-        }
-      });
-    }
-    else if(endPoint == SIGNUP_DOCTOR_ENDPOINT){
-      DioHelper.postData(url: SIGNUP_DOCTOR_ENDPOINT, data: data).then((value){
-        if (value.statusCode == 200){
-          token =  value.data['token'];
-          Navigator.push(context,
-              MaterialPageRoute(builder: (BuildContext context) => PatientLayout()));
-        }else if (value.statusCode == 422){
-          //show message Error
-          print("The given data was invalid.");
-        }else{
-          print("error mn3rfaosh .");
-        }
-      });
-    }
 
-
+    DioHelper.postData(url: endPoint, data: data).then((value) {
+      if (value.statusCode == 200) {
+        token = value.data['token'];
+        if (endPoint == SIGNUP_PATIENT_ENDPOINT) {
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (BuildContext context) => PatientLayout()));
+        } else {
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (BuildContext context) => DoctorLayout()));
+        }
+      } else if (value.statusCode == 422) {
+        //show message Error
+        print("The given data was invalid.");
+      } else {
+        print("error mn3rfaosh .");
+      }
+    });
   }
 }
 
