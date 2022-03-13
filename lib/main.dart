@@ -1,13 +1,19 @@
+import 'package:bloc/bloc.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:graduation_dr_brain/Network/dio_helper.dart';
 import 'package:graduation_dr_brain/pages/patient/patient_doctors/doctors_screen.dart';
 import 'package:graduation_dr_brain/pages/registration/identity.dart';
+import 'package:graduation_dr_brain/services/patient/patient_cubit.dart';
+
+import 'helpers/constants.dart';
 
 void main() {
   DioHelper.init();
   runApp(Identity());
+
+
 }
 
 class MyApp extends StatelessWidget {

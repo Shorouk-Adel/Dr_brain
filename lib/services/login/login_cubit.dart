@@ -8,6 +8,7 @@ import 'package:graduation_dr_brain/Network/dio_helper.dart';
 import 'package:graduation_dr_brain/helpers/constants.dart';
 import 'package:graduation_dr_brain/pages/patient/home.dart';
 import 'package:graduation_dr_brain/services/doctor/doctor_layout.dart';
+import 'package:graduation_dr_brain/services/patient/patient_cubit.dart';
 import 'package:graduation_dr_brain/services/patient/patient_layout.dart';
 import 'package:graduation_dr_brain/services/patient/patient_states.dart';
 import 'package:http/http.dart' as http;
@@ -27,6 +28,7 @@ class LoginCubit extends Cubit<LoginState> {
       context,
       required String endPoint}) async {
     emit(LoginLoadingState());
+
     //sending data to login api
     //if(Profiles[index].name=="Patient")
     final response = await http.post(
@@ -49,6 +51,9 @@ class LoginCubit extends Cubit<LoginState> {
               builder: (BuildContext context) => PatientLayout()));
       token = jsonDecode(response.body)['token'];
       getData(email);
+
+
+
       print('Token : ${jsonDecode(response.body)['token']}');
       //showToast(text:'Logged in Successfully' , state: ToastStates.SUCCESS);
     } else if (response.statusCode == 200 &&

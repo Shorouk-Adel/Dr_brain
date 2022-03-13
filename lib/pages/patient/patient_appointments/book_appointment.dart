@@ -166,18 +166,6 @@ class BookAppointment extends StatelessWidget {
                                     height: 40,
                                   ),
 
-                                  /*  DateTimePicker(
-                              type: DateTimePickerType.time,
-                              //timePickerEntryModeInput: true,
-                              initialValue: '',
-                              //controller: timeController, //_initialValue,
-                              icon: Icon(Icons.access_time),
-                              timeLabelText: "Time",
-                              use24HourFormat: false,
-                            ),
-                            const SizedBox(
-                              height: 40,
-                            ),*/
                                   CustomButton(
                                     function: () {
                                       if (appointmentKey.currentState!

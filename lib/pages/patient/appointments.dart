@@ -1,10 +1,17 @@
+import 'dart:convert';
+import 'package:http/http.dart' as http;
+
 import 'package:flutter/material.dart';
+import 'package:graduation_dr_brain/Model/meeting.dart';
+import 'package:graduation_dr_brain/helpers/constants.dart';
 class PatientAppointment extends StatefulWidget {
   const PatientAppointment({Key? key}) : super(key: key);
   @override
   _PatientAppointmentState createState() => _PatientAppointmentState();
 }
 class _PatientAppointmentState extends State<PatientAppointment> {
+  List? listOfMaps;
+  List <MeetingModel>appoinments = [];
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -81,8 +88,8 @@ class _PatientAppointmentState extends State<PatientAppointment> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text("Doctor Name"),
-                            Text(
-                              "DR.Mohamed Amer",
+                            Text(appoinments[0].meetingLink.toString(),
+                              maxLines: 1,
                               style: TextStyle(
                                   color: Colors.deepPurple,
                                   fontSize: 20,
@@ -158,4 +165,51 @@ class _PatientAppointmentState extends State<PatientAppointment> {
       ),
     );
   }
+
+
+  Future<void> getPatientAppointments(String id) async {
+    final response = await http.get(
+      Uri.parse('https://dr-brains.com/api/p-appointments/$id'),
+      headers: <String, String>{
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer $token'
+      },
+    );
+    if (response.statusCode == 200) {
+      print(response.body);
+      List listOfMaps = jsonDecode(response.body);
+      setState(() {
+        for (int i = 0; i < listOfMaps.length; i++) {
+          appoinments.add(MeetingModel(
+            id:listOfMaps[i]['id'],
+            doctorEmail:listOfMaps[i]['doctor_email'].toString(),
+            doctorId:listOfMaps[i]['doctor_id'].toString(),
+            meetingDate:listOfMaps[i]['meeting_date'].toString(),
+            meetingDateTime:listOfMaps[i]['meeting_date_time'].toString(),
+            meetingDescription:listOfMaps[i]['meeting_description'].toString(),
+            meetingId:listOfMaps[i]['meeting_id'].toString(),
+            meetingLink:listOfMaps[i]['meeting_link'].toString(),
+            meetingName:listOfMaps[i]['meeting_name'].toString(),
+            meetingTime:listOfMaps[i]['meeting_time'].toString(),
+            patientEmail:listOfMaps[i]['patient_email'].toString(),
+            patientId:listOfMaps[i]['patient_id'].toString(),
+          ));
+          print(appoinments[i].meetingLink);
+        }
+      });
+
+      print(patientModel.avatarUrl);
+    } else {
+
+      //showToast(text:jsonDecode(response.body)['error'] , state: ToastStates.ERROR);
+      throw Exception('Failed to getData');
+    }
+  }
+  @override
+  void initState() {
+    // TODO: implement initState
+    getPatientAppointments(patientModel.id);
+  }
+
+
 }

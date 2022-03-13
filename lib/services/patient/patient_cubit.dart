@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:graduation_dr_brain/Model/meeting.dart';
 import 'package:graduation_dr_brain/Model/patient_model.dart';
 import 'package:http/http.dart' as http;
 import 'package:bloc/bloc.dart';
@@ -24,7 +25,7 @@ class PatientCubit extends Cubit<PatientStates> {
 
   int total = 0;
   int currentIndex = 0;
-
+  List<MeetingModel> appoinments = [];
   List<Widget> MainScreens = [
     PatientHome(),
     PatientAppointment(),
@@ -85,7 +86,7 @@ class PatientCubit extends Cubit<PatientStates> {
         'meeting_description': description,
         'doctor_email': DoctorEmail,
         'patient_email': PatientEmail,
-        'Doctor_id': DoctorId,
+        'doctor_id': DoctorId,
         'patient_id': patientId,
       }),
     );
@@ -100,5 +101,44 @@ class PatientCubit extends Cubit<PatientStates> {
     }
   }
 
-
+  Future<void> getPatientAppointments(String id) async {
+    final response = await http.get(
+      Uri.parse('https://dr-brains.com/api/p-appointments/$id'),
+      headers: <String, String>{
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer $token'
+      },
+    );
+    if (response.statusCode == 200) {
+      print(response.body);
+      List listOfMaps = jsonDecode(response.body);
+      emit(GetPatientAppointmentsSuccess());
+      for (int i = 0; i < listOfMaps.length; i++) {
+        appoinments.add(MeetingModel(
+            id:listOfMaps[i]['id'],
+            doctorEmail:listOfMaps[i]['doctor_email'].toString(),
+            doctorId:listOfMaps[i]['doctor_id'].toString(),
+            meetingDate:listOfMaps[i]['meeting_date'].toString(),
+            meetingDateTime:listOfMaps[i]['meeting_date_time'].toString(),
+            meetingDescription:listOfMaps[i]['meeting_description'].toString(),
+            meetingId:listOfMaps[i]['meeting_id'].toString(),
+            meetingLink:listOfMaps[i]['meeting_link'].toString(),
+            meetingName:listOfMaps[i]['meeting_name'].toString(),
+            meetingTime:listOfMaps[i]['meeting_time'].toString(),
+            patientEmail:listOfMaps[i]['patient_email'].toString(),
+            patientId:listOfMaps[i]['patient_id'].toString(),
+        ));
+        print(appoinments[i].meetingLink);
+        emit(GetPatientAppointmentsSuccess());
+      }
+      print(patientModel.avatarUrl);
+    } else {
+      emit(GetPatientAppointmentsError());
+      //showToast(text:jsonDecode(response.body)['error'] , state: ToastStates.ERROR);
+      throw Exception('Failed to getData');
+    }
+  }
 }
+
+
+
