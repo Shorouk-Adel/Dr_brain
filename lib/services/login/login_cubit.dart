@@ -3,11 +3,13 @@ import 'dart:convert';
 import 'dart:io';
 import 'package:dio/dio.dart';
 import 'package:flutter/services.dart';
+import 'package:graduation_dr_brain/Model/patient_model.dart';
 import 'package:graduation_dr_brain/Network/dio_helper.dart';
 import 'package:graduation_dr_brain/helpers/constants.dart';
 import 'package:graduation_dr_brain/pages/patient/home.dart';
 import 'package:graduation_dr_brain/services/doctor/doctor_layout.dart';
 import 'package:graduation_dr_brain/services/patient/patient_layout.dart';
+import 'package:graduation_dr_brain/services/patient/patient_states.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -46,16 +48,19 @@ class LoginCubit extends Cubit<LoginState> {
           MaterialPageRoute(
               builder: (BuildContext context) => PatientLayout()));
       token = jsonDecode(response.body)['token'];
+      getData(email);
       print('Token : ${jsonDecode(response.body)['token']}');
       //showToast(text:'Logged in Successfully' , state: ToastStates.SUCCESS);
     } else if (response.statusCode == 200 &&
         endPoint == LOGIN_DOCTOR_ENDPOINT) {
+
       print('Congratulations,you have signed in successfully');
       emit(LoginSuccessState());
+
       Navigator.push(context,
           MaterialPageRoute(builder: (BuildContext context) => DoctorLayout()));
       token = jsonDecode(response.body)['token'];
-
+      getData(email);
       print('Token : ${jsonDecode(response.body)['token']}');
       //showToast(text:'Logged in Successfully' , state: ToastStates.SUCCESS);
     } else {
@@ -115,11 +120,13 @@ class LoginCubit extends Cubit<LoginState> {
       if (value.statusCode == 200) {
         token = value.data['token'];
         if (endPoint == SIGNUP_PATIENT_ENDPOINT) {
+          getData(email);
           Navigator.push(
               context,
               MaterialPageRoute(
                   builder: (BuildContext context) => PatientLayout()));
         } else {
+          getData(email);
           Navigator.push(
               context,
               MaterialPageRoute(
@@ -133,7 +140,42 @@ class LoginCubit extends Cubit<LoginState> {
       }
     });
   }
+
+  Future<void> getData(String email) async {
+    final response = await http.get(
+      Uri.parse('https://dr-brains.com/api/patients/search/$email'),
+      headers: <String, String>{
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer $token'
+      },
+    );
+    if (response.statusCode == 200) {
+      print(response.body);
+
+      emit(PatientDataSuccess());
+      List listOfMaps =  jsonDecode(response.body);
+
+      patientModel = PatientModel(
+          listOfMaps[0]['id'].toString(),
+          listOfMaps[0]['full_name'],
+          listOfMaps[0]['email'],
+          listOfMaps[0]['phone'],
+          listOfMaps[0]['location'],
+          listOfMaps[0]['avatar'].toString().replaceAll('\/', "/"));
+
+      print(patientModel.avatarUrl);
+
+    } else {
+      emit(PatientDataError());
+      //showToast(text:jsonDecode(response.body)['error'] , state: ToastStates.ERROR);
+      throw Exception('Failed to getData');
+    }
+  }
+
 }
+
+
+
 
 /*
 *

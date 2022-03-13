@@ -37,8 +37,7 @@ class _DoctorDetailsState extends State<DoctorDetails> {
               child: CircleAvatar(
                 radius: 30,
                 backgroundImage: NetworkImage(
-                  // widget.model.avatar.toString(),
-                  "https://health.gov/sites/default/files/styles/topic_card_image/public/2020-01/regular-checkups_banner.jpg?itok=2HIjcA3h",
+                 widget.model.avatar.toString(),
                 ),
               ),
             ),
@@ -66,28 +65,30 @@ class _DoctorDetailsState extends State<DoctorDetails> {
             ),
 
             Padding(
-              padding: const EdgeInsets.all(15.0),
-              child: Row(
-                children: [
-                  SizedBox(width: 18.0),
-                  CustomCard(
-                      mark: Colors.lightBlue,
-                      icon: Icons.supervisor_account,
-                      number: "1000+",
-                      text: "Patient"),
-                  SizedBox(width: 18.0),
-                  CustomCard(
-                      mark: Colors.redAccent,
-                      icon: Icons.emoji_events_outlined,
-                      number: "10 Yrs",
-                      text: "Experience"),
-                  SizedBox(width: 18.0),
-                  CustomCard(
-                      mark: Colors.deepOrangeAccent,
-                      icon: Icons.star_border_outlined,
-                      number: "4.5",
-                      text: "Ratings"),
-                ],
+              padding: const EdgeInsets.all(10.0),
+              child: SizedBox(
+                child: Row(
+                  children: [
+                    SizedBox(width: 5.0),
+                    CustomCard(
+                        mark: Colors.lightBlue,
+                        icon: Icons.supervisor_account,
+                        number: "1000+",
+                        text: "Patient"),
+                    SizedBox(width: 5.0),
+                    CustomCard(
+                        mark: Colors.redAccent,
+                        icon: Icons.emoji_events_outlined,
+                        number: "10 Yrs",
+                        text: "Experience"),
+
+                    CustomCard(
+                        mark: Colors.deepOrangeAccent,
+                        icon: Icons.star_border_outlined,
+                        number: "4.5",
+                        text: "Ratings"),
+                  ],
+                ),
               ),
             ),
             // const SizedBox(height: 8.0),
@@ -202,7 +203,7 @@ class _DoctorDetailsState extends State<DoctorDetails> {
                 function: () {
                   Navigator.push(context,
                       MaterialPageRoute(
-                      builder: (BuildContext context) => BookAppointment()
+                      builder: (BuildContext context) => BookAppointment(widget.model)
                       ));
                 },
                 text: 'Book Appointment',

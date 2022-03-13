@@ -15,7 +15,7 @@ class DoctorsScreen extends StatefulWidget {
 
 class _DoctorsScreenState extends State<DoctorsScreen> {
   List? listOfMaps;
-  List listOfDrs = [];
+  List <DoctorModel>listOfDrs = [];
 
   @override
   Widget build(BuildContext context) {
@@ -63,7 +63,7 @@ class _DoctorsScreenState extends State<DoctorsScreen> {
                         radius: 45,
                         backgroundImage: NetworkImage(
                           // listOfDrs[index].avatar.toString(),
-                          "https://health.gov/sites/default/files/styles/topic_card_image/public/2020-01/regular-checkups_banner.jpg?itok=2HIjcA3h",
+                          listOfDrs[index].avatar,
                         ),
                       ),
                     ),

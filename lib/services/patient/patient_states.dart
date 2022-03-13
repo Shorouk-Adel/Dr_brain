@@ -12,4 +12,3 @@ class SelectTimeSuccessfully extends PatientStates{}
 class SelectingTimeAndDate extends PatientStates{}
 class TimeAndDateSelected extends PatientStates{}
 class TimeAndDateSelectedError extends PatientStates{}
-

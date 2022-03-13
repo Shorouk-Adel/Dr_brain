@@ -7,6 +7,8 @@ class LoginLoadingState extends LoginState{}
 class LoginSuccessState extends LoginState{}
 
 class LoginErrorState extends LoginState {}
+class PatientDataError extends LoginState {}
+class PatientDataSuccess extends LoginState {}
 
 class SignUpInitialState extends LoginState{}
 

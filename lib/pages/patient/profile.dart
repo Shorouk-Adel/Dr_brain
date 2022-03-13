@@ -1,5 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:graduation_dr_brain/Model/patient_model.dart';
+import 'package:graduation_dr_brain/helpers/constants.dart';
 class PatientProfile extends StatelessWidget {
+
+  PatientProfile();
+
 
   @override
   Widget build(BuildContext context) {
@@ -7,7 +12,7 @@ class PatientProfile extends StatelessWidget {
       appBar: AppBar(
         backgroundColor: Colors.white,
         elevation: 0.0,
-        title: Text('Profile',
+        title: const Text('Profile',
             style: TextStyle(
               color: Colors.deepPurple,
               fontSize: 20,
@@ -21,10 +26,10 @@ class PatientProfile extends StatelessWidget {
           children: [
             Row(
               children: [
-                CircleAvatar(
+                 CircleAvatar(
                   radius: 45,
 
-                  backgroundImage: NetworkImage('https://www.nafham.com/uploads/avatars/47246_540cbb1eeb4e1.jpg'),
+                  backgroundImage: NetworkImage(patientModel.avatarUrl),
                 ),
                 SizedBox(
                   width: 15.0,
@@ -32,21 +37,21 @@ class PatientProfile extends StatelessWidget {
                 Column(
                   mainAxisSize: MainAxisSize.min,
                   crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text('Mohamed Tohamy',
+                  children:  [
+                    Text(patientModel.full_name,
                       style: TextStyle(
                           color: Colors.deepPurple,
                           fontSize: 25.0,
                           fontWeight: FontWeight.bold
                       ),
                     ),
-                    Text('tohamymedo11@gmail.com',
+                    Text(patientModel.email,
                       style: TextStyle(
                         fontSize: 15.0,
                           fontWeight: FontWeight.w400
                       ),
                     ),
-                    Text('+201004724510',
+                    Text(patientModel.phone,
                       style: TextStyle(
                         fontSize: 15.0,
                           fontWeight: FontWeight.w400
@@ -61,7 +66,7 @@ class PatientProfile extends StatelessWidget {
             SizedBox(
               height: 10,
             ),
-            Text("SETTING"
+            const Text("SETTING"
               , style: TextStyle(
                   fontSize: 20, color: Colors.deepPurple,
                   fontWeight: FontWeight.w500
