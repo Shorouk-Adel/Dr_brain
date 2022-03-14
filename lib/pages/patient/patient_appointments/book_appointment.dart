@@ -63,7 +63,7 @@ class BookAppointment extends StatelessWidget {
                       Padding(
                         padding: const EdgeInsets.fromLTRB(20, 0, 0, 0),
                         child: Container(
-                          alignment: Alignment.center,
+                          alignment: Alignment.topCenter,
                           child: SizedBox(
                             width: 290,
 
@@ -115,6 +115,19 @@ class BookAppointment extends StatelessWidget {
                                       ),
                                       TextFormField(
                                         cursorColor: Colors.deepPurple,
+                                        onTap: () {},
+                                        controller: descriptionController,
+                                        decoration: InputDecoration(
+                                          labelText: "Description",
+                                          prefixIcon: Icon(Icons.edit,
+                                              color: Colors.deepPurple),
+                                        ),
+                                      ),
+                                      SizedBox(
+                                        height: 15.0,
+                                      ),
+                                      TextFormField(
+                                        cursorColor: Colors.deepPurple,
                                         onTap: () {
                                           DatePicker.showTime12hPicker(context,
                                               showTitleActions: true,
@@ -150,22 +163,10 @@ class BookAppointment extends StatelessWidget {
                                               color: Colors.deepPurple),
                                         ),
                                       ),
-                                      SizedBox(
-                                        height: 15.0,
-                                      ),
-                                      TextFormField(
-                                        cursorColor: Colors.deepPurple,
-                                        onTap: () {},
-                                        controller: descriptionController,
-                                        decoration: InputDecoration(
-                                          labelText: "Description",
-                                          prefixIcon: Icon(Icons.edit,
-                                              color: Colors.deepPurple),
-                                        ),
-                                      ),
+
 
                                       const SizedBox(
-                                        height: 250,
+                                        height: 20,
                                       ),
 
                                       CustomButton(
