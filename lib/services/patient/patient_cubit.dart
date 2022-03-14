@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:graduation_dr_brain/Model/meeting.dart';
 import 'package:graduation_dr_brain/Model/patient_model.dart';
+import 'package:graduation_dr_brain/services/patient/patient_layout.dart';
 import 'package:http/http.dart' as http;
 import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
@@ -58,6 +59,7 @@ class PatientCubit extends Cubit<PatientStates> {
   TextDirection appDirection = TextDirection.ltr;
 
   void bookAppointment({
+    required context,
     required String time,
     required String date,
     required String DoctorEmail,
@@ -93,6 +95,10 @@ class PatientCubit extends Cubit<PatientStates> {
     if (response.statusCode == 201) {
       print('Congratulations,you have booked the appointment successfully' +
           response.body);
+      Navigator.push(
+          context,
+          MaterialPageRoute(
+              builder: (BuildContext context) => PatientLayout()));
       emit(TimeAndDateSelected());
     } else {
       emit(TimeAndDateSelectedError());

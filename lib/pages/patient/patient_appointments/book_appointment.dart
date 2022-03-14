@@ -57,8 +57,8 @@ class BookAppointment extends StatelessWidget {
                 child: Padding(
                   padding: const EdgeInsets.fromLTRB(0, 30, 0, 0),
                   child: Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
                     children: <Widget>[
                       Padding(
                         padding: const EdgeInsets.fromLTRB(20, 0, 0, 0),
@@ -71,52 +71,66 @@ class BookAppointment extends StatelessWidget {
                               key: appointmentKey,
                               child: Column(
                                 children: [
-                                  TextFormField(
-                                    onTap: () {
-                                      DatePicker.showDatePicker(context,
-                                          showTitleActions: true,
-                                          minTime: DateTime(2022, 3, 13),
-                                          maxTime: DateTime(2022, 12, 31),
-                                          onChanged: (date) {
-                                        apiStringDate = date.year.toString() +
-                                            "-" +
-                                            date.month.toString() +
-                                            "-" +
-                                            date.day.toString();
-                                        print('change ' + apiStringDate);
-                                      }, onConfirm: (date) {
-                                        apiStringDate = date.year.toString() +
-                                            "-" +
-                                            date.month.toString() +
-                                            "-" +
-                                            date.day.toString();
-                                        print('confirm ' +
-                                            date.year.toString() +
-                                            "-" +
-                                            date.month.toString() +
-                                            "-" +
-                                            date.day.toString());
-                                      },
-                                          currentTime: DateTime.now(),
-                                          locale: LocaleType.en);
-                                    },
-                                    controller: dateController,
+                                  Column(
+                                    children: [
+                                      TextFormField(
+                                        onTap: () {
+                                          DatePicker.showDatePicker(context,
+                                              showTitleActions: true,
+                                              minTime: DateTime(2022, 3, 13),
+                                              maxTime: DateTime(2022, 12, 31),
+                                              onChanged: (date) {
+                                            apiStringDate = date.year.toString() +
+                                                "-" +
+                                                date.month.toString() +
+                                                "-" +
+                                                date.day.toString();
+                                            print('change ' + apiStringDate);
+                                          }, onConfirm: (date) {
+                                            apiStringDate = date.year.toString() +
+                                                "-" +
+                                                date.month.toString() +
+                                                "-" +
+                                                date.day.toString();
+                                            print('confirm ' +
+                                                date.year.toString() +
+                                                "-" +
+                                                date.month.toString() +
+                                                "-" +
+                                                date.day.toString());
+                                          },
+                                              currentTime: DateTime.now(),
+                                              locale: LocaleType.en);
+                                        },
+                                        controller: dateController,
 
-                                    decoration: InputDecoration(
-                                      labelText: "Date",
-                                      prefixIcon: Icon(Icons.event,
-                                          color: Colors.deepPurple),
-                                    ),
-                                  ),
-                                  SizedBox(
-                                    height: 15.0,
-                                  ),
-                                  TextFormField(
-                                    cursorColor: Colors.deepPurple,
-                                    onTap: () {
-                                      DatePicker.showTime12hPicker(context,
-                                          showTitleActions: true,
-                                          onChanged: (date) {
+                                        decoration: InputDecoration(
+                                          labelText: "Date",
+                                          prefixIcon: Icon(Icons.event,
+                                              color: Colors.deepPurple),
+                                        ),
+                                      ),
+                                      SizedBox(
+                                        height: 15.0,
+                                      ),
+                                      TextFormField(
+                                        cursorColor: Colors.deepPurple,
+                                        onTap: () {
+                                          DatePicker.showTime12hPicker(context,
+                                              showTitleActions: true,
+                                              onChanged: (date) {
+                                                final dt = DateTime(
+                                                    date.year,
+                                                    date.month,
+                                                    date.day,
+                                                    date.hour,
+                                                    date.minute);
+                                                var formatTime =
+                                                DateFormat.jm();
+                                                apiStringTime = formatTime.format(date).toString();
+                                            print('change $date in time zone ' +apiStringTime);
+
+                                          }, onConfirm: (date) {
                                             final dt = DateTime(
                                                 date.year,
                                                 date.month,
@@ -124,65 +138,58 @@ class BookAppointment extends StatelessWidget {
                                                 date.hour,
                                                 date.minute);
                                             var formatTime =
-                                            DateFormat.jm();
-                                            apiStringTime = formatTime.format(date).toString();
-                                        print('change $date in time zone ' +apiStringTime);
+                                                DateFormat.jm();
+                                            apiStringTime = formatTime.format(date).toString();//"6:00 AM"
+                                            print('confirm $apiStringTime');
+                                            print(formatTime.format(date));
+                                          }, );
+                                        },
+                                        decoration: InputDecoration(
+                                          labelText: "Time",
+                                          prefixIcon: Icon(Icons.access_time,
+                                              color: Colors.deepPurple),
+                                        ),
+                                      ),
+                                      SizedBox(
+                                        height: 15.0,
+                                      ),
+                                      TextFormField(
+                                        cursorColor: Colors.deepPurple,
+                                        onTap: () {},
+                                        controller: descriptionController,
+                                        decoration: InputDecoration(
+                                          labelText: "Description",
+                                          prefixIcon: Icon(Icons.edit,
+                                              color: Colors.deepPurple),
+                                        ),
+                                      ),
 
-                                      }, onConfirm: (date) {
-                                        final dt = DateTime(
-                                            date.year,
-                                            date.month,
-                                            date.day,
-                                            date.hour,
-                                            date.minute);
-                                        var formatTime =
-                                            DateFormat.jm();
-                                        apiStringTime = formatTime.format(date).toString();//"6:00 AM"
-                                        print('confirm $apiStringTime');
-                                        print(formatTime.format(date));
-                                      }, );
-                                    },
-                                    decoration: InputDecoration(
-                                      labelText: "Time",
-                                      prefixIcon: Icon(Icons.access_time,
-                                          color: Colors.deepPurple),
-                                    ),
-                                  ),
-                                  SizedBox(
-                                    height: 15.0,
-                                  ),
-                                  TextFormField(
-                                    cursorColor: Colors.deepPurple,
-                                    maxLines: 6,
-                                    onTap: () {},
-                                    controller: descriptionController,
-                                    decoration: InputDecoration(
-                                      labelText: "Description",
-                                      prefixIcon: Icon(Icons.edit,
-                                          color: Colors.deepPurple),
-                                    ),
-                                  ),
-                                  const SizedBox(
-                                    height: 40,
+                                      const SizedBox(
+                                        height: 250,
+                                      ),
+
+                                      CustomButton(
+                                        function: () {
+                                          if (appointmentKey.currentState!
+                                              .validate()) {
+                                            myCubit.bookAppointment(
+                                              context : context,
+                                                date: apiStringDate,
+                                                patientId: patientModel.id,
+                                                DoctorId: model.id.toString(),
+                                                DoctorEmail: model.email,
+                                                PatientEmail: patientModel.email,
+                                                description: descriptionController.text,
+                                                time: apiStringTime);
+                                          }
+                                        },
+                                        text: 'Book Appointment',
+                                        isUpperCase: true,
+                                      ),
+                                    ],
+
                                   ),
 
-                                  CustomButton(
-                                    function: () {
-                                      if (appointmentKey.currentState!
-                                          .validate()) {
-                                        myCubit.bookAppointment(
-                                            date: apiStringDate,
-                                            patientId: patientModel.id,
-                                            DoctorId: model.id.toString(),
-                                            DoctorEmail: model.email,
-                                            PatientEmail: patientModel.email,
-                                            description: descriptionController.text,
-                                            time: apiStringTime);
-                                      }
-                                    },
-                                    text: 'Book Appointment',
-                                    isUpperCase: true,
-                                  ),
                                 ],
                               ),
                             ),
