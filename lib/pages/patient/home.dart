@@ -8,6 +8,7 @@ class PatientHome extends StatelessWidget {
       appBar: AppBar(
         backgroundColor: Colors.white,
         elevation: 0.0,
+        centerTitle: true,
         title: Text('Home',
           style: TextStyle(
             color: Colors.deepPurple,
@@ -126,6 +127,28 @@ class PatientHome extends StatelessWidget {
                         ),
                       ),
                     ],
+                  ),
+                ),
+              ),
+            ),
+
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: InkWell(
+
+                child: Card(
+                  child: Container(
+                    height: 60,
+                    child: Padding(
+                      padding: const EdgeInsets.all(10.0),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text("Find Your Doctor Now"),
+                          Icon(Icons.arrow_forward_ios),
+                        ],
+                      ),
+                    ),
                   ),
                 ),
               ),

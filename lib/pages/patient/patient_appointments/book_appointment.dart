@@ -35,6 +35,7 @@ class BookAppointment extends StatelessWidget {
           PatientCubit myCubit = PatientCubit.get(context);
           return MaterialApp(
             home: Scaffold(
+              resizeToAvoidBottomInset: false,
               backgroundColor: Colors.white,
               appBar: AppBar(
                 backgroundColor: Colors.white,
@@ -115,19 +116,6 @@ class BookAppointment extends StatelessWidget {
                                       ),
                                       TextFormField(
                                         cursorColor: Colors.deepPurple,
-                                        onTap: () {},
-                                        controller: descriptionController,
-                                        decoration: InputDecoration(
-                                          labelText: "Description",
-                                          prefixIcon: Icon(Icons.edit,
-                                              color: Colors.deepPurple),
-                                        ),
-                                      ),
-                                      SizedBox(
-                                        height: 15.0,
-                                      ),
-                                      TextFormField(
-                                        cursorColor: Colors.deepPurple,
                                         onTap: () {
                                           DatePicker.showTime12hPicker(context,
                                               showTitleActions: true,
@@ -163,7 +151,23 @@ class BookAppointment extends StatelessWidget {
                                               color: Colors.deepPurple),
                                         ),
                                       ),
-
+                                      SizedBox(
+                                        height: 15.0,
+                                      ),
+                                      TextFormField(
+                                        maxLines: 6,
+                                        cursorColor: Colors.deepPurple,
+                                        onTap: () {},
+                                        controller: descriptionController,
+                                        decoration: InputDecoration(
+                                          labelText: "Description",
+                                          prefixIcon: Icon(Icons.edit,
+                                              color: Colors.deepPurple),
+                                        ),
+                                      ),
+                                      SizedBox(
+                                        height: 15.0,
+                                      ),
 
                                       const SizedBox(
                                         height: 20,

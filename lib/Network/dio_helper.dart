@@ -55,7 +55,10 @@ class DioHelper {
   static Future<Response> postData(
       {required String url, required FormData data}) async {
     try {
-      final response = await dio.post(url, data: data);
+      final response = await dio.post(url, data: data , onSendProgress: (int sent, int total) {
+
+        print("$sent $total");
+      },);
 
       print(response.statusCode.toString());
       print(response.statusMessage);

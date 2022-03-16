@@ -10,6 +10,7 @@ class AppointmentDoctor extends StatefulWidget {
 }
 
 class _AppointmentDoctorState extends State<AppointmentDoctor> {
+  bool isLoading = true;
   @override
   Widget build(BuildContext context) {
     return MaterialApp(

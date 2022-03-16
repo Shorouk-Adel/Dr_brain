@@ -7,6 +7,7 @@ import 'package:graduation_dr_brain/pages/registration/patient/patient_sign_up.d
 import 'package:graduation_dr_brain/services/login/login_cubit.dart';
 import 'package:graduation_dr_brain/services/login/login_states.dart';
 import 'package:graduation_dr_brain/services/patient/patient_layout.dart';
+import 'package:graduation_dr_brain/widgets/loading.dart';
 import 'package:graduation_dr_brain/widgets/login_components.dart';
 
 class PatientLogin extends StatelessWidget {
@@ -180,25 +181,34 @@ class PatientLogin extends StatelessWidget {
                               const SizedBox(
                                 height: 40,
                               ),
-                              CustomButton(
-                                function: () {
-                                  if (formKey.currentState!.validate()) {
-                                    myCubit.userLogin(
-                                        email: emailController.text,
-                                        password: passwordController.text,
-                                        endPoint: loginEndpoint,
-                                        context: context);
-
-
-                                  }
-
-                                  //just for testing
-                                  // Navigator.push(context, MaterialPageRoute(
-                                  //     builder: (BuildContext context) =>  AppLayout()));
-                                },
-                                text: 'login',
-                                isUpperCase: true,
+                              Container(
+                                width: double.infinity,
+                                child:myCubit.isLoading?LoadingCircular() : MaterialButton(
+                                  onPressed: (){
+                                    if (formKey.currentState!.validate()) {
+                                      myCubit.userLogin(
+                                          email: emailController.text,
+                                          password: passwordController.text,
+                                          endPoint: loginEndpoint,
+                                          context: context);
+                                    }
+                                  },
+                                  child: Text(
+                                    //isUpperCase ? text.toUpperCase() :
+                                    "login",
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                    ),
+                                  ),
+                                ),
+                                decoration: BoxDecoration(
+                                  color: Colors.deepPurple,
+                                  borderRadius: BorderRadius.circular(
+                                    20.0,
+                                  ),
+                                ),
                               ),
+
 
                               SizedBox(
                                 height: 15.0,

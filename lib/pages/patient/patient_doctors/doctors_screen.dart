@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:graduation_dr_brain/helpers/constants.dart';
 import 'package:graduation_dr_brain/Model/model.dart';
+import 'package:graduation_dr_brain/widgets/loading.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 
@@ -14,6 +15,7 @@ class DoctorsScreen extends StatefulWidget {
 }
 
 class _DoctorsScreenState extends State<DoctorsScreen> {
+  bool isLoading = true;
   List? listOfMaps;
   List <DoctorModel>listOfDrs = [];
 
@@ -35,7 +37,7 @@ class _DoctorsScreenState extends State<DoctorsScreen> {
                     color: Colors.deepPurple)),
           ],
         ),
-        body: GridView.builder(
+        body: isLoading? Loading() : GridView.builder(
           padding: const EdgeInsets.all(16.0),
           gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
               maxCrossAxisExtent: 300,
@@ -101,12 +103,14 @@ class _DoctorsScreenState extends State<DoctorsScreen> {
     });
     print('Token : $token');
     if (response.statusCode == 200) {
+
       print('response status code is: ${response.statusCode}');
       print('ok.. data is retrieved successfully');
       listOfMaps = jsonDecode(response.body);
       //  print(listOfMaps);
 
       setState(() {
+        isLoading = false;
         for (int i = 0; i < listOfMaps!.length; i++) {
           listOfDrs.add(DoctorModel(
               listOfMaps![i]['id'],

@@ -23,7 +23,7 @@ class PatientCubit extends Cubit<PatientStates> {
   static PatientCubit get(context) => BlocProvider.of(context);
 
   //Data
-
+  bool isLoading = false;
   int total = 0;
   int currentIndex = 0;
   List<MeetingModel> appoinments = [];
@@ -136,6 +136,7 @@ class PatientCubit extends Cubit<PatientStates> {
         ));
         print(appoinments[i].meetingLink);
         emit(GetPatientAppointmentsSuccess());
+
       }
       print(patientModel.avatarUrl);
     } else {

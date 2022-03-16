@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:graduation_dr_brain/pages/patient/patient_appointments/book.dart';
 import 'package:graduation_dr_brain/pages/patient/patient_appointments/book_appointment.dart';
 import 'package:graduation_dr_brain/Model/model.dart';
+import 'package:graduation_dr_brain/pages/patient/patient_appointments/book_screen.dart';
 import 'package:graduation_dr_brain/widgets/custom_card.dart';
+import 'package:graduation_dr_brain/widgets/loading.dart';
 import 'package:graduation_dr_brain/widgets/login_components.dart';
+import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 
 class DoctorDetails extends StatefulWidget {
   final DoctorModel model;
@@ -37,7 +41,7 @@ class _DoctorDetailsState extends State<DoctorDetails> {
               child: CircleAvatar(
                 radius: 30,
                 backgroundImage: NetworkImage(
-                 widget.model.avatar.toString(),
+                  widget.model.avatar.toString(),
                 ),
               ),
             ),
@@ -81,7 +85,6 @@ class _DoctorDetailsState extends State<DoctorDetails> {
                         icon: Icons.emoji_events_outlined,
                         number: "10 Yrs",
                         text: "Experience"),
-
                     CustomCard(
                         mark: Colors.deepOrangeAccent,
                         icon: Icons.star_border_outlined,
@@ -201,14 +204,31 @@ class _DoctorDetailsState extends State<DoctorDetails> {
             ),
             CustomButton(
                 function: () {
-                  Navigator.push(context,
+                  // show(context);
+                  // showCustomModalBottomSheet(
+                  //
+                  //   expand: true,
+                  //     context: context,
+                  //     builder: (context) => Container(),
+                  //     containerWidget: (BuildContext context,Animation<double>
+                  //     animation,Widget child){
+                  //       return book(context , widget.model);
+                  //     });
+
+                  Navigator.push(
+                      context,
                       MaterialPageRoute(
-                      builder: (BuildContext context) => BookAppointment(widget.model)
-                      ));
+                          builder: (BuildContext context) =>
+                              BookAppointment(widget.model)));
+                  // Navigator.push(
+                  //     context,
+                  //     MaterialPageRoute(
+                  //         builder: (BuildContext context) =>
+                  //             BookScreen()));
                 },
                 text: 'Book Appointment',
                 width: 350,
-                radius: 30)
+                radius: 30),
           ],
         ),
       ),

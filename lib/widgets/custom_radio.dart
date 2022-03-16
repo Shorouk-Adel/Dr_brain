@@ -27,8 +27,7 @@ class CustomRadio extends StatelessWidget {
               Text(
                 _profile.name,
                 style: TextStyle(
-                    color:
-                    _profile.isSelected ? Colors.white : Colors.deepPurple),
+                    color: _profile.isSelected ? Colors.white : Colors.deepPurple),
               )
             ],
           ),
