@@ -11,6 +11,10 @@ class SelectDateSuccessfully extends PatientStates{}
 class SelectTimeSuccessfully extends PatientStates{}
 class SelectingTimeAndDate extends PatientStates{}
 
+class MriUploaded extends PatientStates{}
+class MriUploadStart extends PatientStates{}
+class MrididntUploaded extends PatientStates{}
+
 class TimeAndDateSelected extends PatientStates{}
 class TimeAndDateSelectedError extends PatientStates{}
 

@@ -6,6 +6,7 @@ import 'package:graduation_dr_brain/Network/dio_helper.dart';
 import 'package:graduation_dr_brain/helpers/constants.dart';
 import 'package:graduation_dr_brain/services/doctor/doctor_layout.dart';
 import 'package:graduation_dr_brain/services/patient/patient_layout.dart';
+import 'package:graduation_dr_brain/widgets/loading.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -66,6 +67,7 @@ class LoginCubit extends Cubit<LoginState> {
     } else {
       isLoading = false;
       emit(LoginErrorState());
+      showError(context);
       //showToast(text:jsonDecode(response.body)['error'] , state: ToastStates.ERROR);
       throw Exception('Failed to login');
     }
@@ -96,6 +98,7 @@ class LoginCubit extends Cubit<LoginState> {
     required String phone,
     required XFile userImage,
   }) async {
+    isLoading = true;
     FormData data = new FormData();
     data.fields.add(MapEntry('user_name', userName));
     data.fields.add(MapEntry('email', email));
@@ -119,6 +122,7 @@ class LoginCubit extends Cubit<LoginState> {
 
     DioHelper.postData(url: endPoint, data: data).then((value) {
       if (value.statusCode == 200) {
+        isLoading = false;
         token = value.data['token'];
         if (endPoint == SIGNUP_PATIENT_ENDPOINT) {
           getData(email);
@@ -134,9 +138,11 @@ class LoginCubit extends Cubit<LoginState> {
                   builder: (BuildContext context) => DoctorLayout()));
         }
       } else if (value.statusCode == 422) {
+        isLoading = false;
         //show message Error
         print("The given data was invalid.");
       } else {
+        isLoading = false;
         print("error mn3rfaosh .");
       }
     });

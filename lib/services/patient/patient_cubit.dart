@@ -1,6 +1,8 @@
 import 'dart:convert';
+import 'package:dio/dio.dart';
 import 'package:graduation_dr_brain/Model/meeting.dart';
 import 'package:graduation_dr_brain/Model/patient_model.dart';
+import 'package:graduation_dr_brain/Network/dio_helper.dart';
 import 'package:graduation_dr_brain/services/patient/patient_layout.dart';
 import 'package:http/http.dart' as http;
 import 'package:bloc/bloc.dart';
@@ -15,6 +17,7 @@ import 'package:graduation_dr_brain/pages/patient/patient_doctors/doctors_screen
 import 'package:graduation_dr_brain/pages/patient/profile.dart';
 import 'package:graduation_dr_brain/pages/profile.dart';
 import 'package:graduation_dr_brain/services/patient/patient_states.dart';
+import 'package:image_picker/image_picker.dart';
 
 class PatientCubit extends Cubit<PatientStates> {
   // call Super constructor with initial State
@@ -58,6 +61,37 @@ class PatientCubit extends Cubit<PatientStates> {
 
   TextDirection appDirection = TextDirection.ltr;
 
+  Future<dynamic> uploadMRI({
+    required String meetingId,
+    required XFile Mri,
+  }) async {
+    emit(MriUploadStart());
+    isLoading = true;
+    FormData data = new FormData();
+    data.fields.add(MapEntry('meeting_id', meetingId));
+    data.files.add(MapEntry(
+      'imagefile',
+      await MultipartFile.fromFile(
+        Mri.path,
+        filename: Mri.path.split("/").last.toString(),
+      ),
+    ));
+    DioHelper.dio.options.headers
+        .addAll({"Authorization": "Bearer $token"});
+    DioHelper.postData(url: "send-mri", data: data).then((value) {
+      if (value.statusCode == 200) {
+        emit(MriUploaded());
+        isLoading = false;
+        print("done");
+      }else{
+        emit(MrididntUploaded());
+        isLoading = false;
+        print("error");
+
+      }
+    });
+  }
+
   void bookAppointment({
     required context,
     required String time,
@@ -69,12 +103,7 @@ class PatientCubit extends Cubit<PatientStates> {
     required String description,
   }) async {
     emit(SelectingTimeAndDate());
-    //testing
-    // print(
-    //     time + " " +date+" "+DoctorEmail+" "+DoctorId+" "+patientId+" "+PatientEmail+" "+description + "token is" + token
-    //
-    // );
-    //sending data to appointment api
+    isLoading = true;
     final response = await http.post(
       Uri.parse('https://dr-brains.com/api/add-appointment'),
       headers: <String, String>{
@@ -93,6 +122,7 @@ class PatientCubit extends Cubit<PatientStates> {
       }),
     );
     if (response.statusCode == 201) {
+      isLoading = false;
       print('Congratulations,you have booked the appointment successfully' +
           response.body);
       Navigator.push(
@@ -102,6 +132,7 @@ class PatientCubit extends Cubit<PatientStates> {
       emit(TimeAndDateSelected());
     } else {
       emit(TimeAndDateSelectedError());
+      isLoading = false;
       //showToast(text:jsonDecode(response.body)['error'] , state: ToastStates.ERROR);
       throw Exception('Failed to bookAppointment');
     }
@@ -121,22 +152,21 @@ class PatientCubit extends Cubit<PatientStates> {
       emit(GetPatientAppointmentsSuccess());
       for (int i = 0; i < listOfMaps.length; i++) {
         appoinments.add(MeetingModel(
-            id:listOfMaps[i]['id'],
-            doctorEmail:listOfMaps[i]['doctor_email'].toString(),
-            doctorId:listOfMaps[i]['doctor_id'].toString(),
-            meetingDate:listOfMaps[i]['meeting_date'].toString(),
-            meetingDateTime:listOfMaps[i]['meeting_date_time'].toString(),
-            meetingDescription:listOfMaps[i]['meeting_description'].toString(),
-            meetingId:listOfMaps[i]['meeting_id'].toString(),
-            meetingLink:listOfMaps[i]['meeting_link'].toString(),
-            meetingName:listOfMaps[i]['meeting_name'].toString(),
-            meetingTime:listOfMaps[i]['meeting_time'].toString(),
-            patientEmail:listOfMaps[i]['patient_email'].toString(),
-            patientId:listOfMaps[i]['patient_id'].toString(),
+          id: listOfMaps[i]['id'],
+          doctorEmail: listOfMaps[i]['doctor_email'].toString(),
+          doctorId: listOfMaps[i]['doctor_id'].toString(),
+          meetingDate: listOfMaps[i]['meeting_date'].toString(),
+          meetingDateTime: listOfMaps[i]['meeting_date_time'].toString(),
+          meetingDescription: listOfMaps[i]['meeting_description'].toString(),
+          meetingId: listOfMaps[i]['meeting_id'].toString(),
+          meetingLink: listOfMaps[i]['meeting_link'].toString(),
+          meetingName: listOfMaps[i]['meeting_name'].toString(),
+          meetingTime: listOfMaps[i]['meeting_time'].toString(),
+          patientEmail: listOfMaps[i]['patient_email'].toString(),
+          patientId: listOfMaps[i]['patient_id'].toString(),
         ));
         print(appoinments[i].meetingLink);
         emit(GetPatientAppointmentsSuccess());
-
       }
       print(patientModel.avatarUrl);
     } else {
@@ -146,6 +176,3 @@ class PatientCubit extends Cubit<PatientStates> {
     }
   }
 }
-
-
-

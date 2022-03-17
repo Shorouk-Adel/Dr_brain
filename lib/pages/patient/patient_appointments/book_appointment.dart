@@ -4,11 +4,10 @@ import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:graduation_dr_brain/Model/model.dart';
 import 'package:graduation_dr_brain/helpers/constants.dart';
 import 'package:graduation_dr_brain/services/patient/patient_cubit.dart';
-import 'package:date_time_picker/date_time_picker.dart';
 import 'package:graduation_dr_brain/services/patient/patient_states.dart';
+import 'package:graduation_dr_brain/widgets/loading.dart';
 import 'package:graduation_dr_brain/widgets/login_components.dart';
 import 'package:intl/intl.dart';
-import 'package:flutter_localizations/flutter_localizations.dart';
 
 class BookAppointment extends StatelessWidget {
   var appointmentKey = GlobalKey<FormState>();
@@ -40,7 +39,7 @@ class BookAppointment extends StatelessWidget {
               appBar: AppBar(
                 backgroundColor: Colors.white,
                 elevation: 0.0,
-                title: Text(
+                title:  Text(
                   'New Appointment',
                   style: TextStyle(
                     color: Colors.deepPurple,
@@ -173,7 +172,7 @@ class BookAppointment extends StatelessWidget {
                                         height: 20,
                                       ),
 
-                                      CustomButton(
+                                      myCubit.isLoading? LoadingCircular() :CustomButton(
                                         function: () {
                                           if (appointmentKey.currentState!
                                               .validate()) {

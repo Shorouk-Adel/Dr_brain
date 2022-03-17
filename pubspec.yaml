@@ -83,6 +83,8 @@ flutter:
     - assets/patient.png
     - assets/brain.gif
     - assets/logo.png
+    - assets/error.gif
+    - assets/success.gif
 
 
   # An image asset can refer to one or more resolution-specific "variants", see
