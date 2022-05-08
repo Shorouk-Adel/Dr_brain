@@ -1,5 +1,8 @@
+import 'dart:ui';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:graduation_dr_brain/pages/patient/reports/reports.dart';
 class PatientHome extends StatelessWidget {
 
   @override
@@ -11,124 +14,89 @@ class PatientHome extends StatelessWidget {
         centerTitle: true,
         title: Text('Home',
           style: TextStyle(
-            color: Colors.deepPurple,
+            color: Colors.black,
+            fontWeight: FontWeight.bold,
             fontSize: 20,
           ),
         ),
         actions: [
-          IconButton( onPressed: () => Navigator.of(context).pop(),
-              icon: const Icon(Icons.messenger_outlined,
-                  color: Colors.black)),
+          // IconButton( onPressed: () => Navigator.of(context).pop(),
+          //     icon: const Icon(Icons.messenger_outlined,
+          //         color: Colors.black)),
         ],
       ),
       body: Padding(
         padding: const EdgeInsets.all(8.0),
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text('NEXT APPOINTMENT',
-              style: TextStyle(
-                fontSize: 20.0,
-                color: Colors.deepPurple,
-              ),),
+            Card(
+              child: SizedBox(
+                  height: 200,
+                  width: double.infinity,
+                  child: Image.asset("assets/healt.jpg")
+              ),
+            ),
+
             Padding(
               padding: const EdgeInsets.all(8.0),
-              child: Container(
-                height: 150,
-                child: Card(
-                  child: Row(
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: SizedBox(
-                          width: 120,
-                          height: 120,
-                          child: ClipRRect(
-                            borderRadius: BorderRadius.circular(10),
-                            child: Image(
-                              fit: BoxFit.cover,
-                              image: NetworkImage(
-                                  'https://img.freepik.com/free-vector/cartoon-illustration-lying-patient-with-drip-blood-hospital-isolated-white-health-care-concept-with-patient-during-blood-transfusion_126520-510.jpg?w=740'),
-                            ),
-                          ),
-                        ),
+              child: Row(
+                children: [
+
+                  Container(
+                    width: 120,
+                    height: 120,
+                    child: Card(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Icon(Icons.date_range , color: Colors.deepOrange,),
+                          SizedBox(height: 5,),
+                          Text("Appoinments"),
+                        ],
                       ),
-                      Padding(
-                        padding: const EdgeInsets.all(10.0),
+                    ),
+                  ),
+                  Container(
+                    width: 120,
+                    height: 120,
+                    child: InkWell(
+                      onTap: (){
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => Reports()));
+                      },
+                      child: Card(
                         child: Column(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          crossAxisAlignment: CrossAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            Text("Doctor Name"),
-                            Text(
-                              "DR.Mohamed Amer",
-                              style: TextStyle(
-                                  color: Colors.deepPurple,
-                                  fontSize: 20,
-                                  fontWeight: FontWeight.bold),
-                            ),
-                            Row(
-                              children: [
-                                Column(
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text("Rate"),
-                                    Text(
-                                      "4.5",
-                                      style: TextStyle(
-                                          color: Colors.deepPurple,
-                                          fontSize: 20,
-                                          fontWeight: FontWeight.bold),
-                                    ),
-                                  ],
-                                ),
-                                SizedBox(
-                                  width: 30,
-                                ),
-                                Column(
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text("Time"),
-                                    Text("20:45",
-                                      style: TextStyle(
-                                        color: Colors.deepPurple,
-                                        fontSize: 20,
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ],
-                            ),
-                            Column(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text("Status"),
-                                Container(
-                                  width: 100,
-                                  height: 20,
-                                  alignment: Alignment.center,
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(20.0),
-                                    color: Colors.green,
-                                  ),
-                                  child: Text("Confirmed" ,
-                                    style: TextStyle(
-                                        color: Colors.white,
-                                        fontSize: 15,
-                                        fontWeight: FontWeight.normal),
-                                  ),
-                                )
-                              ],
-                            ),
+                            Icon(Icons.paste_outlined  , color: Colors.green,),
+                            SizedBox(height: 10,),
+                            Text("Reports"),
                           ],
                         ),
                       ),
-                    ],
+                    ),
                   ),
-                ),
+                  Container(
+                    width: 120,
+                    height: 120,
+                    child: Card(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Icon(Icons.medication , color: Colors.indigo,),
+                          SizedBox(height: 5,),
+                          Text("Medicines"),
+                        ],
+                      ),
+                    ),
+                  ),
+                ],
               ),
             ),
 

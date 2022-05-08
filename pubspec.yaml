@@ -49,8 +49,11 @@ dependencies:
   url_launcher: ^6.0.20
   responsive_framework: ^0.1.7
   modal_bottom_sheet: ^2.0.1
-
-
+  firebase_core: ^1.0.2
+  firebase_database: ^7.2.1
+  material_dialogs: ^1.0.0
+  pdf_render: ^1.0.15
+  flutter_rating_bar: ^4.0.0
 
 
 
@@ -81,8 +84,10 @@ flutter:
   # To add assets to your application, add an assets section, like this:
   assets:
     - assets/patient.png
+    - assets/healt.jpg
     - assets/brain.gif
     - assets/logo.png
+    - assets/folder.png
     - assets/error.gif
     - assets/success.gif
 

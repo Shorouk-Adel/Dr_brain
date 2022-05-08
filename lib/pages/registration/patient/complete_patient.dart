@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:graduation_dr_brain/helpers/constants.dart';
 import 'package:graduation_dr_brain/services/login/login_cubit.dart';
 import 'package:graduation_dr_brain/services/login/login_states.dart';
+import 'package:graduation_dr_brain/widgets/loading.dart';
 import 'package:graduation_dr_brain/widgets/login_components.dart';
 import 'package:image_picker/image_picker.dart';
 import 'dart:async';
@@ -293,36 +294,45 @@ class CompletePatient extends StatelessWidget {
                               const SizedBox(
                                 height: 40,
                               ),
-                              CustomButton(
-                                function: () {
-                                  if (formKey.currentState!.validate()) {
-                                    myCubit.register(
-                                        userImage: image!,
-                                        endPoint: SIGNUP_PATIENT_ENDPOINT,
-                                        userName: userNameController.text,
-                                        ssn: ssnController.text,
-                                        gender: valueChoosed,
-                                        location: locationController.text,
-                                        birthdate: birthdateController.text,
-                                        phone: phoneController.text,
-                                        name: pName,
-                                        email: pEmail,
-                                        password: pPassword,
-                                        context: context);
+                              Container(
+                                child: myCubit.isLoading
+                                    ? LoadingCircular()
+                                    : CustomButton(
+                                        function: () {
+                                          if (formKey.currentState!
+                                              .validate()) {
+                                            myCubit.register(
+                                                userImage: image!,
+                                                endPoint:
+                                                    SIGNUP_PATIENT_ENDPOINT,
+                                                userName:
+                                                    userNameController.text,
+                                                ssn: ssnController.text,
+                                                gender: valueChoosed,
+                                                location:
+                                                    locationController.text,
+                                                birthdate:
+                                                    birthdateController.text,
+                                                phone: phoneController.text,
+                                                name: pName,
+                                                email: pEmail,
+                                                password: pPassword,
+                                                context: context);
 
-                                    //myCubit.uploadImage();
-                                  }
+                                            //myCubit.uploadImage();
+                                          }
 
-                                  //just for testing
-                                  // Navigator.push(context, MaterialPageRoute(
-                                  //     builder: (BuildContext context) =>  AppLayout()));
-                                },
-                                text: 'SignUp',
-                                isUpperCase: true,
+                                          //just for testing
+                                          // Navigator.push(context, MaterialPageRoute(
+                                          //     builder: (BuildContext context) =>  AppLayout()));
+                                        },
+                                        text: 'SignUp',
+                                        isUpperCase: true,
+                                      ),
                               ),
 
                               SizedBox(
-                                height: 15.0,
+                                height: 30.0,
                               ),
                             ],
                           ),

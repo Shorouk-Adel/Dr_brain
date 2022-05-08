@@ -10,8 +10,10 @@ import 'package:graduation_dr_brain/services/patient/patient_cubit.dart';
 import 'helpers/constants.dart';
 
 void main() {
+
   DioHelper.init();
-  runApp(Identity());
+  runApp(
+      Identity());
 
 
 }

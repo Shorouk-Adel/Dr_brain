@@ -1,0 +1,69 @@
+{
+  "project_info": {
+    "project_number": "196515264621",
+    "firebase_url": "https://chatgrad-a1879-default-rtdb.firebaseio.com",
+    "project_id": "chatgrad-a1879",
+    "storage_bucket": "chatgrad-a1879.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:196515264621:android:31806300d00cee14e0a764",
+        "android_client_info": {
+          "package_name": "com.example.chatgraduation"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "196515264621-007m6nmuqrgr3ok6lqau49u8hf49s5es.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDqzYfCj_jhGy3GQHmraROKxJbGMkecpeA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "196515264621-007m6nmuqrgr3ok6lqau49u8hf49s5es.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:196515264621:android:8a1461dac36e0353e0a764",
+        "android_client_info": {
+          "package_name": "com.example.graduation_dr_brain"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "196515264621-007m6nmuqrgr3ok6lqau49u8hf49s5es.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDqzYfCj_jhGy3GQHmraROKxJbGMkecpeA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "196515264621-007m6nmuqrgr3ok6lqau49u8hf49s5es.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

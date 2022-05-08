@@ -4,6 +4,7 @@ import 'package:graduation_dr_brain/Model/meeting.dart';
 import 'package:graduation_dr_brain/Model/patient_model.dart';
 import 'package:graduation_dr_brain/Network/dio_helper.dart';
 import 'package:graduation_dr_brain/services/patient/patient_layout.dart';
+import 'package:graduation_dr_brain/widgets/loading.dart';
 import 'package:http/http.dart' as http;
 import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
@@ -64,6 +65,7 @@ class PatientCubit extends Cubit<PatientStates> {
   Future<dynamic> uploadMRI({
     required String meetingId,
     required XFile Mri,
+  required context,
   }) async {
     emit(MriUploadStart());
     isLoading = true;
@@ -83,10 +85,12 @@ class PatientCubit extends Cubit<PatientStates> {
         emit(MriUploaded());
         isLoading = false;
         print("done");
+        showSnackBar("Mri Uploaded",context,false);
       }else{
         emit(MrididntUploaded());
         isLoading = false;
         print("error");
+        showSnackBar("Mri Upload Error",context,true);
 
       }
     });
@@ -111,7 +115,7 @@ class PatientCubit extends Cubit<PatientStates> {
         'Authorization': 'Bearer $token'
       },
       body: jsonEncode(<String, String>{
-        'meeting_name': "meeting$time$DoctorId",
+        'meeting_name': "Meeting $time",
         'meeting_date': date.toString(),
         'meeting_time': time.toString(),
         'meeting_description': description,

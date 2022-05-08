@@ -1,6 +1,8 @@
 import 'dart:convert';
+import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:graduation_dr_brain/helpers/constants.dart';
 import 'package:graduation_dr_brain/Model/model.dart';
+import 'package:graduation_dr_brain/widgets/custom_card.dart';
 import 'package:graduation_dr_brain/widgets/loading.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
@@ -17,7 +19,7 @@ class DoctorsScreen extends StatefulWidget {
 class _DoctorsScreenState extends State<DoctorsScreen> {
   bool isLoading = true;
   List? listOfMaps;
-  List <DoctorModel>listOfDrs = [];
+  List<DoctorModel> listOfDrs = [];
 
   @override
   Widget build(BuildContext context) {
@@ -37,57 +39,72 @@ class _DoctorsScreenState extends State<DoctorsScreen> {
                     color: Colors.deepPurple)),
           ],
         ),
-        body: isLoading? Loading() : GridView.builder(
-          padding: const EdgeInsets.all(16.0),
-          gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
-              maxCrossAxisExtent: 300,
-              childAspectRatio: 1,
-              crossAxisSpacing: 10,
-              mainAxisSpacing: 10),
-          itemCount: listOfDrs.length,
-          itemBuilder: (BuildContext context, int index) {
-            return InkWell(
-              onTap: () {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) =>
-                            DoctorDetails(listOfDrs[index])));
-              },
-              child: Card(
-                clipBehavior: Clip.antiAlias,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    AspectRatio(
-                      aspectRatio: 15.0 / 8.0,
-                      child: CircleAvatar(
-                        radius: 45,
-                        backgroundImage: NetworkImage(
-                          // listOfDrs[index].avatar.toString(),
-                          listOfDrs[index].avatar,
-                        ),
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.fromLTRB(16.0, 12.0, 16.0, 8.0),
-                      child: Container(
-                        alignment: Alignment.center,
-                        child: Column(
+        body: isLoading
+            ? Loading()
+            : ListView.builder(
+                padding: const EdgeInsets.all(16.0),
+                itemCount: listOfDrs.length,
+                itemBuilder: (BuildContext context, int index) {
+                  return InkWell(
+                    onTap: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) =>
+                                  DoctorDetails(listOfDrs[index])));
+                    },
+                    child: SizedBox(
+                      height: 100,
+                      child: Card(
+                        clipBehavior: Clip.antiAlias,
+                        child: Row(
                           children: <Widget>[
-                            Text(listOfDrs[index].full_name ,style: TextStyle(fontSize: 15 , fontWeight: FontWeight.bold ,  ),),
-                            const SizedBox(height: 8.0),
-                            Text("Neurosurgery"),
+                            Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: CircleAvatar(
+                                radius: 45,
+                                backgroundImage: NetworkImage(
+                                  // listOfDrs[index].avatar.toString(),
+                                  listOfDrs[index].avatar,
+                                ),
+                              ),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    listOfDrs[index].full_name,
+                                    style: TextStyle(
+                                      fontSize: 15,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                  const SizedBox(height: 8.0),
+                                  Text("Neurosurgery"),
+                                  const SizedBox(height: 8.0),
+                                  Text(
+                                    "Avilable",
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.green[800],
+                                      fontSize: 10,
+                                    ),
+                                  ),
+
+                                ],
+                              ),
+                            ),
+
                           ],
                         ),
                       ),
                     ),
-                  ],
-                ),
+                  );
+                },
               ),
-            );
-          },
-        ),
       ),
     );
   }
@@ -99,11 +116,9 @@ class _DoctorsScreenState extends State<DoctorsScreen> {
 
       'Authorization': 'Bearer $token',
       //HttpHeaders.authorizationHeader: 'Bearer $token',
-
     });
     print('Token : $token');
     if (response.statusCode == 200) {
-
       print('response status code is: ${response.statusCode}');
       print('ok.. data is retrieved successfully');
       listOfMaps = jsonDecode(response.body);
@@ -116,7 +131,7 @@ class _DoctorsScreenState extends State<DoctorsScreen> {
               listOfMaps![i]['id'],
               listOfMaps![i]['full_name'],
               listOfMaps![i]['email'],
-              listOfMaps![i]['phone'] ,
+              listOfMaps![i]['phone'],
               listOfMaps![i]['location'].toString(),
               listOfMaps![i]['avatar']));
         }

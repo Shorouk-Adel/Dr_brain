@@ -14,6 +14,7 @@ Widget LoadingCircular(){
     child: Center(
       child: LinearProgressIndicator(),
 
+
     ),
   );
 }
@@ -55,6 +56,23 @@ Future<void> showError(context)async {
     );
   });
 }
+
+void showSnackBar(String message, BuildContext context , bool isError) {
+  final snackBar = SnackBar(
+    duration: Duration(seconds: 5),
+    content: Container(
+        height: 40.0,
+        child:  Center(
+          child: Text(
+            '$message',
+            style: TextStyle(fontSize: 25.0),
+          ),
+        )),
+    backgroundColor: isError?Colors.red :Colors.green,
+  );
+  Scaffold.of(context).showSnackBar(snackBar);
+}
+
 
 Future<void> showSuccess(context)async {
   return showDialog(context: context, builder: (BuildContext context){
