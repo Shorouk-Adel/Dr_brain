@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:graduation_dr_brain/helpers/constants.dart';
 import 'package:graduation_dr_brain/Model/model.dart';
 import 'package:graduation_dr_brain/widgets/custom_card.dart';

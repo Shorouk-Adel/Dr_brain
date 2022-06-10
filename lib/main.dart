@@ -12,8 +12,7 @@ import 'helpers/constants.dart';
 void main() {
 
   DioHelper.init();
-  runApp(
-      Identity());
+  runApp(Identity());
 
 
 }

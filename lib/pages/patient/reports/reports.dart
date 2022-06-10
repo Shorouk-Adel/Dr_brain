@@ -1,9 +1,11 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:flutter/services.dart';
 import 'package:graduation_dr_brain/Model/doctor.dart';
 import 'package:graduation_dr_brain/Model/meeting.dart';
 import 'package:graduation_dr_brain/helpers/constants.dart';
+import 'package:graduation_dr_brain/pages/patient/reports/report_page.dart';
 import 'package:http/http.dart' as http;
 import 'package:url_launcher/url_launcher.dart';
 
@@ -18,7 +20,6 @@ class _ReportsState extends State<Reports> {
   List? listOfMaps;
   var now = new DateTime.now();
   List<MeetingModel> appoinments = [];
-
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -42,7 +43,6 @@ class _ReportsState extends State<Reports> {
                           color: Colors.black,
                         ),
                       ),
-
                       SizedBox(
                         width: 15,
                       ),
@@ -75,7 +75,7 @@ class _ReportsState extends State<Reports> {
               itemBuilder: (BuildContext context, int index) {
                 return InkWell(
                   onTap: () {
-                    getData(appoinments[index].doctorId.toString() , index);
+                    getData(appoinments[index].doctorId.toString(), index);
                   },
                   child: Container(
                     height: 150,
@@ -105,7 +105,8 @@ class _ReportsState extends State<Reports> {
                           Text(
                             appoinments[index].meetingName.toString(),
                             style: TextStyle(fontSize: 18),
-                          )
+                          ),
+
                         ],
                       ),
                     ),
@@ -159,6 +160,7 @@ class _ReportsState extends State<Reports> {
     // TODO: implement initState
     getPatientAppointments(patientModel.id);
   }
+
   Future<void> getData(String id, int index) async {
     final response = await http.get(
       Uri.parse('https://dr-brains.com/api/doctors/$id'),
@@ -182,8 +184,6 @@ class _ReportsState extends State<Reports> {
       //showToast(text:jsonDecode(response.body)['error'] , state: ToastStates.ERROR);
       throw Exception('Failed to getData');
     }
-
-
   }
 
   void showBottom(int index) {
@@ -222,7 +222,6 @@ class _ReportsState extends State<Reports> {
                           style: TextStyle(
                               fontSize: 20, fontWeight: FontWeight.w600),
                         ),
-
                         SizedBox(
                           height: 20,
                         ),
@@ -240,7 +239,7 @@ class _ReportsState extends State<Reports> {
                             ),
                             CircleAvatar(
                               backgroundImage:
-                              NetworkImage(doctorModel.avatarUrl),
+                                  NetworkImage(doctorModel.avatarUrl),
                               maxRadius: 15,
                             ),
                             SizedBox(
@@ -294,47 +293,48 @@ class _ReportsState extends State<Reports> {
                           height: 20,
                         ),
                         InkWell(
-                          onTap: (){
-                            _launchURL();
+                          onTap: () {
+                            // _launchURL();
+                            getReport();
                           },
                           child: ListTile(
-                            leading:Stack(
+                            leading: Stack(
                               alignment: Alignment.center,
-                             children: [
-                               Image.asset(
-                                 'assets/folder.png',
-                                 fit: BoxFit.fitWidth,
-                                 color: Colors.red[900],
-                               ),
-                               Padding(
-                                 padding: const EdgeInsets.all(5.0),
-                                 child: Text("PDF" , style: TextStyle(
-                                   fontSize: 15,
-                                   fontWeight: FontWeight.bold,
-                                   color: Colors.white
-                                 ),),
-                               ),
-                             ],
-                            ) ,
-                            title: Text("Report ${appoinments[index].meetingName}"),
-                            subtitle:Text(
+                              children: [
+                                Image.asset(
+                                  'assets/folder.png',
+                                  fit: BoxFit.fitWidth,
+                                  color: Colors.red[900],
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.all(5.0),
+                                  child: Text(
+                                    "PDF",
+                                    style: TextStyle(
+                                        fontSize: 15,
+                                        fontWeight: FontWeight.bold,
+                                        color: Colors.white),
+                                  ),
+                                ),
+                              ],
+                            ),
+                            title: Text(
+                                "Report ${appoinments[index].meetingName}"),
+                            subtitle: Text(
                               "Tap To Open",
                               style: TextStyle(
                                 fontWeight: FontWeight.bold,
                                 color: Colors.black38,
                                 fontSize: 15,
                               ),
-                            ) ,
+                            ),
                           ),
                         ),
-
                         SizedBox(height: 30),
                         SizedBox(
                           height: 50,
                           child: RaisedButton(
-                            onPressed: () {
-
-                            },
+                            onPressed: () {},
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(10),
                             ),
@@ -359,8 +359,6 @@ class _ReportsState extends State<Reports> {
                             ),
                           ),
                         ),
-
-
                       ],
                     ),
                   ),
@@ -373,8 +371,35 @@ class _ReportsState extends State<Reports> {
     );
   }
 
+
   void _launchURL() async {
     if (!await launch("http://www.africau.edu/images/default/sample.pdf"))
       throw 'Could not launch ';
   }
+
+  void _apiTest() {}
+
+  Future<void> getReport() async {
+    final response = await http.post(
+      Uri.parse('https://dr-brains.com/api/testpdf'),
+      headers: <String, String>{
+        'Content-Type': 'application/json',
+      },
+      body: jsonEncode(<String, String>{
+        'id': "21",
+      }),
+    );
+    if (response.statusCode == 200) {
+      print(response.body);
+//Report
+      var html = response.body;
+      Navigator.push(
+          context,
+          MaterialPageRoute(
+              builder: (context) => Report(html)));
+    } else {
+      throw Exception('Failed to getData');
+    }
+  }
+
 }

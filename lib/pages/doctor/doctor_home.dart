@@ -1,4 +1,11 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
+import 'package:graduation_dr_brain/Model/meeting.dart';
+import 'package:graduation_dr_brain/helpers/constants.dart';
+import 'package:graduation_dr_brain/widgets/loading.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 
 class DoctorHome extends StatefulWidget {
   const DoctorHome({Key? key}) : super(key: key);
@@ -9,12 +16,24 @@ class DoctorHome extends StatefulWidget {
 
 class _DoctorHomeState extends State<DoctorHome> {
   @override
+  void initState() {
+    getDoctorAppointments(doctorModel.id);
+
+  }
+  bool isLoading = true;
+  List<MeetingModel> appoinments = [];
+  var now = new DateTime.now();
+  var last ;
+
+  @override
   Widget build(BuildContext context) {
     return MaterialApp(
       theme: ThemeData(
         primarySwatch: Colors.deepPurple,
       ),
-      home: Scaffold(
+      home:  isLoading
+          ? Loading()
+          :Scaffold(
         backgroundColor: Colors.white,
         appBar: AppBar(
           backgroundColor: Colors.white,
@@ -58,7 +77,7 @@ class _DoctorHomeState extends State<DoctorHome> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Text(
-                            "17",
+                            getCountUpComing().toString(),
                             style: TextStyle(
                                 color: Colors.white,
                                 fontSize: 50,
@@ -87,7 +106,7 @@ class _DoctorHomeState extends State<DoctorHome> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Text(
-                            "18",
+                            getCountPast().toString(),
                             style: TextStyle(
                                 color: Colors.white,
                                 fontSize: 50,
@@ -119,104 +138,77 @@ class _DoctorHomeState extends State<DoctorHome> {
             ),
             Padding(
               padding: const EdgeInsets.all(8.0),
-              child: Container(
-                height: 150,
-                child: Card(
-                  child: Row(
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: SizedBox(
-                          width: 120,
-                          height: 120,
-                          child: ClipRRect(
-                            borderRadius: BorderRadius.circular(10),
-                            child: Image(
-                              fit: BoxFit.cover,
-                              image: NetworkImage(
-                                  'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT4R4MFQR8vAkhxBlg_ZxTlHGo8nqwrk0Ua6g&usqp=CAU'),
+              child: Column(
+                children: [
+                  Container(
+                    height: 100,
+                    child: Card(
+                      child: Container(
+                        decoration: BoxDecoration(
+                          border: Border(
+                            left: BorderSide(
+                              width: 5.0,
+                              color: Colors.primaries[Random()
+                                  .nextInt(Colors.primaries.length)],
                             ),
                           ),
+                          color: Colors.white,
                         ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.all(10.0),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          crossAxisAlignment: CrossAxisAlignment.start,
+                        child: Row(
                           children: [
-                            Text("Patient Name"),
-                            Text(
-                              "Kareem Hesham",
-                              style: TextStyle(
-                                  color: Colors.deepPurple,
-                                  fontSize: 20,
-                                  fontWeight: FontWeight.bold),
-                            ),
-                            Row(
-                              children: [
-                                Column(
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text("Age"),
-                                    Text(
-                                      "29",
-                                      style: TextStyle(
-                                          color: Colors.deepPurple,
-                                          fontSize: 20,
-                                          fontWeight: FontWeight.normal),
-                                    ),
-                                  ],
-                                ),
-                                SizedBox(
-                                  width: 30,
-                                ),
-                                Column(
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text("Time"),
-                                    Text(
-                                      "20:45",
-                                      style: TextStyle(
-                                          color: Colors.deepPurple,
-                                          fontSize: 20,
-                                          fontWeight: FontWeight.bold),
-                                    ),
-                                  ],
-                                ),
-                              ],
-                            ),
-                            Column(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text("Status"),
-                                Container(
-                                  width: 100,
-                                  height: 20,
-                                  alignment: Alignment.center,
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(20.0),
-                                    color: Colors.green,
-                                  ),
-                                  child: Text(
-                                    "Approved",
+                            Padding(
+                              padding: const EdgeInsets.all(10.0),
+                              child: Column(
+                                mainAxisAlignment:
+                                MainAxisAlignment.start,
+                                crossAxisAlignment:
+                                CrossAxisAlignment.start,
+                                children: [
+                                  Text("Meeting Name"),
+                                  Text(
+                                    appoinments[last]
+                                        .meetingName
+                                        .toString(),
+                                    maxLines: 1,
                                     style: TextStyle(
-                                        color: Colors.white,
-                                        fontSize: 15,
-                                        fontWeight: FontWeight.normal),
+                                        color: Colors.deepPurple,
+                                        fontSize: 18,
+                                        fontWeight: FontWeight.bold),
                                   ),
-                                )
-                              ],
+                                  Row(
+                                    children: [
+                                      Column(
+                                        mainAxisAlignment:
+                                        MainAxisAlignment.start,
+                                        crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                        children: [
+                                          Text("Time"),
+                                          Text(
+                                            appoinments[last]
+                                                .meetingDateTime
+                                                .toString(),
+                                            style: TextStyle(
+                                              color:
+                                              Colors.deepPurple,
+                                              fontSize: 12,
+                                              fontWeight:
+                                              FontWeight.bold,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ],
+                                  ),
+                                ],
+                              ),
                             ),
                           ],
                         ),
                       ),
-                    ],
+                    ),
                   ),
-                ),
+                ],
               ),
             ),
           ],
@@ -224,4 +216,76 @@ class _DoctorHomeState extends State<DoctorHome> {
       ),
     );
   }
+
+
+  Future<void> getDoctorAppointments(String id) async {
+    final response = await http.get(
+      Uri.parse('https://dr-brains.com/api/dr-appointments/$id'),
+      headers: <String, String>{
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer $token'
+      },
+    );
+    if (response.statusCode == 200) {
+      print(response.body);
+      List listOfMaps = jsonDecode(response.body);
+      setState(() {
+        for (int i = 0; i < listOfMaps.length; i++) {
+          appoinments.add(MeetingModel(
+            id: listOfMaps[i]['id'],
+            doctorEmail: listOfMaps[i]['doctor_email'].toString(),
+            doctorId: listOfMaps[i]['doctor_id'].toString(),
+            meetingDate: listOfMaps[i]['meeting_date'].toString(),
+            meetingDateTime: listOfMaps[i]['meeting_date_time'].toString(),
+            meetingDescription: listOfMaps[i]['meeting_description'].toString(),
+            meetingId: listOfMaps[i]['meeting_id'].toString(),
+            meetingLink: listOfMaps[i]['meeting_link'].toString(),
+            meetingName: listOfMaps[i]['meeting_name'].toString(),
+            meetingTime: listOfMaps[i]['meeting_time'].toString(),
+            patientEmail: listOfMaps[i]['patient_email'].toString(),
+            patientId: listOfMaps[i]['patient_id'].toString(),
+          ));
+          isLoading = false;
+          print(appoinments[i].meetingLink);
+        }
+      });
+      last = appoinments.length-1;
+      print(doctorModel.avatarUrl);
+      print(doctorModel.full_name);
+
+    } else {
+      //showToast(text:jsonDecode(response.body)['error'] , state: ToastStates.ERROR);
+      throw Exception('Failed to getData');
+    }
+  }
+  int getCountUpComing() {
+    int count = 0;
+    DateTime nowTime = new DateTime.now();
+
+    for (int i = 0; i < appoinments.length; i++) {
+      if (appoinments[i]
+          .meetingDateTime
+          .toString()
+          .compareTo(nowTime.toString()) >
+          0) {
+        count++;
+      }
+    }
+    print(count);
+    return count;
+  }
+  int getCountPast() {
+    int count = 0;
+    DateTime nowTime = new DateTime.now();
+    count = appoinments.length - getCountUpComing();
+    print(count);
+    return count;
+  }
+
+
+
+
+
+
+
 }

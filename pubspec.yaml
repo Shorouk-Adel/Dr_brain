@@ -36,8 +36,6 @@ dependencies:
   cupertino_icons: ^1.0.2
   http: ^0.13.3
   dio: ^4.0.0
-  dotted_decoration: ^2.0.0
-  dotted_border: ^2.0.0+2
   bloc: ^7.1.0
   flutter_bloc: ^7.1.0
   shared_preferences: ^2.0.7
@@ -52,10 +50,7 @@ dependencies:
   firebase_core: ^1.0.2
   firebase_database: ^7.2.1
   material_dialogs: ^1.0.0
-  pdf_render: ^1.0.15
-  flutter_rating_bar: ^4.0.0
-
-
+  webview_flutter_plus: ^0.3.0+2
 
 
 

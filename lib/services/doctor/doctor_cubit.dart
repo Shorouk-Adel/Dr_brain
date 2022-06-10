@@ -1,9 +1,10 @@
 import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:graduation_dr_brain/pages/doctor/appointment.dart';
+import 'package:graduation_dr_brain/pages/doctor/Chat/dr_chat.dart';
+import 'package:graduation_dr_brain/pages/doctor/d_profile.dart';
 import 'package:graduation_dr_brain/pages/doctor/doctor_home.dart';
-import 'package:graduation_dr_brain/pages/messages.dart';
+import 'package:graduation_dr_brain/pages/doctor/dr_appointment.dart';
 import 'package:graduation_dr_brain/pages/patient/patient_doctors/doctors_screen.dart';
 import 'package:graduation_dr_brain/pages/profile.dart';
 import 'package:graduation_dr_brain/widgets/custom_radio.dart';
@@ -24,9 +25,9 @@ class DoctorCubit extends Cubit<DoctorStates> {
 
   List<Widget>MainScreens=[
     DoctorHome(),
-    AppointmentDoctor(),
-    DoctorsScreen(),
-    ProfileScreen(),
+    DoctorAppointment(),
+    DrChat(),
+    DoctorProfile(),
   ];
 
 

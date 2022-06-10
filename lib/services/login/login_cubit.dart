@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:dio/dio.dart';
+import 'package:graduation_dr_brain/Model/doctor.dart';
 import 'package:graduation_dr_brain/Model/patient_model.dart';
 import 'package:graduation_dr_brain/Network/dio_helper.dart';
 import 'package:graduation_dr_brain/helpers/constants.dart';
@@ -47,20 +48,18 @@ class LoginCubit extends Cubit<LoginState> {
           MaterialPageRoute(
               builder: (BuildContext context) => PatientLayout()));
       token = jsonDecode(response.body)['token'];
-      getData(email);
+      getDataPatients(email);
 
       print('Token : ${jsonDecode(response.body)['token']}');
       isLoading = false;
       //showToast(text:'Logged in Successfully' , state: ToastStates.SUCCESS);
-    } else if (response.statusCode == 200 &&
-        endPoint == LOGIN_DOCTOR_ENDPOINT) {
+    } else if (response.statusCode == 200 && endPoint == LOGIN_DOCTOR_ENDPOINT) {
       print('Congratulations,you have signed in successfully');
       emit(LoginSuccessState());
-
       Navigator.push(context,
           MaterialPageRoute(builder: (BuildContext context) => DoctorLayout()));
       token = jsonDecode(response.body)['token'];
-      getData(email);
+      getDataDoctor(email);
       print('Token : ${jsonDecode(response.body)['token']}');
       isLoading = false;
       //showToast(text:'Logged in Successfully' , state: ToastStates.SUCCESS);
@@ -125,13 +124,13 @@ class LoginCubit extends Cubit<LoginState> {
         isLoading = false;
         token = value.data['token'];
         if (endPoint == SIGNUP_PATIENT_ENDPOINT) {
-          getData(email);
+          getDataPatients(email);
           Navigator.push(
               context,
               MaterialPageRoute(
                   builder: (BuildContext context) => PatientLayout()));
         } else {
-          getData(email);
+          getDataPatients(email);
           Navigator.push(
               context,
               MaterialPageRoute(
@@ -148,7 +147,7 @@ class LoginCubit extends Cubit<LoginState> {
     });
   }
 
-  Future<void> getData(String email) async {
+  Future<void> getDataPatients(String email) async {
     final response = await http.get(
       Uri.parse('https://dr-brains.com/api/patients/search/$email'),
       headers: <String, String>{
@@ -171,6 +170,33 @@ class LoginCubit extends Cubit<LoginState> {
           listOfMaps[0]['avatar'].toString().replaceAll('\/', "/"));
 
       print(patientModel.avatarUrl);
+    } else {
+      emit(PatientDataError());
+      //showToast(text:jsonDecode(response.body)['error'] , state: ToastStates.ERROR);
+      throw Exception('Failed to getData');
+    }
+  }
+  Future<void> getDataDoctor(String email) async {
+    final response = await http.get(
+      Uri.parse('https://dr-brains.com/api/doctors/search/$email'),
+      headers: <String, String>{
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer $token'
+      },
+    );
+    if (response.statusCode == 200) {
+      print(response.body);
+
+      emit(PatientDataSuccess());
+      List listOfMaps = jsonDecode(response.body);
+
+      doctorModel = DoctorModel(
+          listOfMaps[0]['id'].toString(),
+          listOfMaps[0]['full_name'],
+          listOfMaps[0]['email'],
+          listOfMaps[0]['avatar'].toString().replaceAll('\/', "/"));
+
+      print(doctorModel.avatarUrl);
     } else {
       emit(PatientDataError());
       //showToast(text:jsonDecode(response.body)['error'] , state: ToastStates.ERROR);

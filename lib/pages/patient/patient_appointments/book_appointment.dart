@@ -14,7 +14,13 @@ class BookAppointment extends StatelessWidget {
   var dateController = TextEditingController(text: DateTime.now().toString());
   var timeController = TextEditingController(
       text:
-          '${TimeOfDay.now().hour.toString()}:${TimeOfDay.now().minute.toString()}');
+      '${TimeOfDay
+          .now()
+          .hour
+          .toString()}:${TimeOfDay
+          .now()
+          .minute
+          .toString()}');
   var descriptionController = TextEditingController();
   TimeOfDay time = TimeOfDay.now();
   DoctorModel model;
@@ -39,7 +45,7 @@ class BookAppointment extends StatelessWidget {
               appBar: AppBar(
                 backgroundColor: Colors.white,
                 elevation: 0.0,
-                title:  Text(
+                title: Text(
                   'New Appointment',
                   style: TextStyle(
                     color: Colors.deepPurple,
@@ -80,25 +86,29 @@ class BookAppointment extends StatelessWidget {
                                               minTime: DateTime(2022, 3, 13),
                                               maxTime: DateTime(2022, 12, 31),
                                               onChanged: (date) {
-                                            apiStringDate = date.year.toString() +
-                                                "-" +
-                                                date.month.toString() +
-                                                "-" +
-                                                date.day.toString();
-                                            print('change ' + apiStringDate);
-                                          }, onConfirm: (date) {
-                                            apiStringDate = date.year.toString() +
-                                                "-" +
-                                                date.month.toString() +
-                                                "-" +
-                                                date.day.toString();
-                                            print('confirm ' +
-                                                date.year.toString() +
-                                                "-" +
-                                                date.month.toString() +
-                                                "-" +
-                                                date.day.toString());
-                                          },
+                                                apiStringDate =
+                                                    date.year.toString() +
+                                                        "-" +
+                                                        date.month.toString() +
+                                                        "-" +
+                                                        date.day.toString();
+                                                print(
+                                                    'change ' + apiStringDate);
+                                              },
+                                              onConfirm: (date) {
+                                                apiStringDate =
+                                                    date.year.toString() +
+                                                        "-" +
+                                                        date.month.toString() +
+                                                        "-" +
+                                                        date.day.toString();
+                                                print('confirm ' +
+                                                    date.year.toString() +
+                                                    "-" +
+                                                    date.month.toString() +
+                                                    "-" +
+                                                    date.day.toString());
+                                              },
                                               currentTime: DateTime.now(),
                                               locale: LocaleType.en);
                                         },
@@ -117,32 +127,37 @@ class BookAppointment extends StatelessWidget {
                                         cursorColor: Colors.deepPurple,
                                         onTap: () {
                                           DatePicker.showTime12hPicker(context,
-                                              showTitleActions: true,
-                                              onChanged: (date) {
-                                                final dt = DateTime(
-                                                    date.year,
-                                                    date.month,
-                                                    date.day,
-                                                    date.hour,
-                                                    date.minute);
-                                                var formatTime =
-                                                DateFormat.jm();
-                                                apiStringTime = formatTime.format(date).toString();
-                                            print('change $date in time zone ' +apiStringTime);
-
-                                          }, onConfirm: (date) {
-                                            final dt = DateTime(
-                                                date.year,
-                                                date.month,
-                                                date.day,
-                                                date.hour,
-                                                date.minute);
-                                            var formatTime =
-                                                DateFormat.jm();
-                                            apiStringTime = formatTime.format(date).toString();//"6:00 AM"
-                                            print('confirm $apiStringTime');
-                                            print(formatTime.format(date));
-                                          }, );
+                                            showTitleActions: true,
+                                            onChanged: (date) {
+                                              final dt = DateTime(
+                                                  date.year,
+                                                  date.month,
+                                                  date.day,
+                                                  date.hour,
+                                                  date.minute);
+                                              var formatTime =
+                                              DateFormat.jm();
+                                              apiStringTime =
+                                                  formatTime.format(date)
+                                                      .toString();
+                                              print(
+                                                  'change $date in time zone ' +
+                                                      apiStringTime);
+                                            }, onConfirm: (date) {
+                                              final dt = DateTime(
+                                                  date.year,
+                                                  date.month,
+                                                  date.day,
+                                                  date.hour,
+                                                  date.minute);
+                                              var formatTime =
+                                              DateFormat.jm();
+                                              apiStringTime =
+                                                  formatTime.format(date)
+                                                      .toString(); //"6:00 AM"
+                                              print('confirm $apiStringTime');
+                                              print(formatTime.format(date));
+                                            },);
                                         },
                                         decoration: InputDecoration(
                                           labelText: "Time",
@@ -172,18 +187,22 @@ class BookAppointment extends StatelessWidget {
                                         height: 20,
                                       ),
 
-                                      myCubit.isLoading? LoadingCircular() :CustomButton(
+                                      myCubit.isLoading
+                                          ? LoadingCircular()
+                                          : CustomButton(
                                         function: () {
                                           if (appointmentKey.currentState!
                                               .validate()) {
                                             myCubit.bookAppointment(
-                                              context : context,
+                                                context: context,
                                                 date: apiStringDate,
                                                 patientId: patientModel.id,
                                                 DoctorId: model.id.toString(),
                                                 DoctorEmail: model.email,
-                                                PatientEmail: patientModel.email,
-                                                description: descriptionController.text,
+                                                PatientEmail: patientModel
+                                                    .email,
+                                                description: descriptionController
+                                                    .text,
                                                 time: apiStringTime);
                                           }
                                         },
