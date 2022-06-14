@@ -1,16 +1,22 @@
-# graduation_dr_brain
+# About Dr Brain
 
-A new Flutter project.
+Our project is a mobile application using flutter and a web application that provides the patient and the doctor a unique experience for virtual consultation feature through video call and chatting, “Dr-brain” is a medical platform that helps the patient and doctor in the process of diagnosing brain tumors with artificial intelligence, which may be misdiagnosed because the symptoms mimic other diseases such as meningitis, Alzheimer’s disease, migraine and encephalitis
 
-## Getting Started
 
-This project is a starting point for a Flutter application.
+# libraries
+- bloc
+- Dio
+- Firebase Database
+- webview_flutter_plus to convert HTML code to preview
 
-A few resources to get you started if this is your first Flutter project:
+## Features
 
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
-
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+ - Create meetings
+ - Chat
+ - Reports
+ - Medical History
+ - Meetings History
+ - Dashboard
+ - Patient Profile
+ - Doctor Profile
+ 
