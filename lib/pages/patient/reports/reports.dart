@@ -295,7 +295,7 @@ class _ReportsState extends State<Reports> {
                         InkWell(
                           onTap: () {
                             // _launchURL();
-                            getReport();
+                            getReport(appoinments[index].id.toString());
                           },
                           child: ListTile(
                             leading: Stack(
@@ -379,14 +379,14 @@ class _ReportsState extends State<Reports> {
 
   void _apiTest() {}
 
-  Future<void> getReport() async {
+  Future<void> getReport(String id) async {
     final response = await http.post(
       Uri.parse('https://dr-brains.com/api/testpdf'),
       headers: <String, String>{
         'Content-Type': 'application/json',
       },
       body: jsonEncode(<String, String>{
-        'id': "21",
+        'id': "$id",
       }),
     );
     if (response.statusCode == 200) {

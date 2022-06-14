@@ -42,12 +42,7 @@ class _DoctorAppointmentState extends State<DoctorAppointment> {
               fontSize: 20,
             ),
           ),
-          actions: [
-            IconButton(
-                onPressed: () => Navigator.of(context).pop(),
-                icon: const Icon(Icons.messenger_outlined,
-                    color: Colors.black)),
-          ],
+
         ),
         body: DefaultTabController(
           length: 2,

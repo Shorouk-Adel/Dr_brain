@@ -41,8 +41,8 @@ class PatientCubit extends Cubit<PatientStates> {
     BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
     BottomNavigationBarItem(icon: Icon(Icons.alarm), label: 'Appointments'),
     BottomNavigationBarItem(
-        icon: Icon(Icons.message_outlined), label: 'Doctors'),
-    BottomNavigationBarItem(icon: Icon(Icons.person), label: 'Profile'),
+        icon: Icon(Icons.person_search_outlined), label: 'Doctors'),
+    BottomNavigationBarItem(icon: Icon(Icons.person_outline_rounded), label: 'Profile'),
   ];
 
   //Actions

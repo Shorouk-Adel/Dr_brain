@@ -302,7 +302,7 @@ class DrAppointmentDetails extends StatelessWidget {
                       InkWell(
                         onTap: () {
                           // _launchURL();
-                          getReport(context);
+                          getReport(context , appoinment.id.toString());
                         },
                         child: ListTile(
                           leading: Stack(
@@ -398,14 +398,14 @@ class DrAppointmentDetails extends StatelessWidget {
     }
   }
 
-  Future<void> getReport(context) async {
+  Future<void> getReport(context , String id) async {
     final response = await http.post(
       Uri.parse('https://dr-brains.com/api/testpdf'),
       headers: <String, String>{
         'Content-Type': 'application/json',
       },
       body: jsonEncode(<String, String>{
-        'id': "21",
+        'id': "$id",
       }),
     );
     if (response.statusCode == 200) {

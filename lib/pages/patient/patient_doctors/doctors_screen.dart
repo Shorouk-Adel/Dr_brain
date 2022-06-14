@@ -31,12 +31,6 @@ class _DoctorsScreenState extends State<DoctorsScreen> {
             "Doctors",
             style: TextStyle(color: Colors.deepPurple, fontSize: 20),
           ),
-          actions: [
-            IconButton(
-                onPressed: () => Navigator.of(context).pop(),
-                icon: const Icon(Icons.filter_list_outlined,
-                    color: Colors.deepPurple)),
-          ],
         ),
         body: isLoading
             ? Loading()

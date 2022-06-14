@@ -88,298 +88,328 @@ class AppointmentDeteails extends StatelessWidget {
                             color: Colors.black87)),
                   ],
                 ),
-                body: Padding(
-                  padding: const EdgeInsets.all(20.0),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        appoinment.meetingName.toString(),
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          color: Colors.black,
-                          fontSize: 25,
+                body: SingleChildScrollView(
+                  child: Padding(
+                    padding: const EdgeInsets.all(20.0),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          appoinment.meetingName.toString(),
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            color: Colors.black,
+                            fontSize: 25,
+                          ),
                         ),
-                      ),
-                      SizedBox(
-                        height: 30,
-                      ),
-                      Row(
-                        children: [
-                          Icon(Icons.calendar_today_outlined,
-                              color: Colors.black87),
-                          SizedBox(
-                            width: 15,
-                          ),
-                          Text(
-                            appoinment.meetingDateTime.toString(),
-                            style: TextStyle(
-                              color: Colors.black,
-                              fontSize: 15,
+                        SizedBox(
+                          height: 30,
+                        ),
+                        Row(
+                          children: [
+                            Icon(Icons.calendar_today_outlined,
+                                color: Colors.black87),
+                            SizedBox(
+                              width: 15,
                             ),
-                          ),
-                        ],
-                      ),
-                      SizedBox(
-                        height: 15,
-                      ),
-                      Row(
-                        children: [
-                          Text(
-                            "Doctor :",
-                            style: TextStyle(
-                              color: Colors.black38,
-                              fontSize: 15,
-                            ),
-                          ),
-                          SizedBox(
-                            width: 15,
-                          ),
-                          CircleAvatar(
-                            backgroundImage:
-                                NetworkImage(doctorModel.avatarUrl),
-                            maxRadius: 15,
-                          ),
-                          SizedBox(
-                            width: 10,
-                          ),
-                          Text(
-                            doctorModel.full_name,
-                            style: TextStyle(
-                              color: Colors.black,
-                              fontSize: 15,
-                            ),
-                          ),
-                        ],
-                      ),
-                      ExpansionTile(
-                        title: Text("Desription :"),
-                        children: [
-                          Text(appoinment.meetingDescription.toString()),
-                        ],
-                      ),
-                      SizedBox(
-                        height: 5,
-                      ),
-                      SizedBox(
-                        height: 10,
-                      ),
-                      Divider(),
-                      Row(
-                        children: [
-                          Icon(Icons.attachment_rounded, color: Colors.black87),
-                          SizedBox(
-                            width: 15,
-                          ),
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: const [
-                              Text(
-                                "Attachments",
-                                style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.black38,
-                                  fontSize: 20,
-                                ),
+                            Text(
+                              appoinment.meetingDateTime.toString(),
+                              style: TextStyle(
+                                color: Colors.black,
+                                fontSize: 15,
                               ),
-                              Text(
-                                "This Section To Upload MRI Image",
-                                style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.black38,
-                                  fontSize: 10,
-                                ),
+                            ),
+                          ],
+                        ),
+                        SizedBox(
+                          height: 15,
+                        ),
+                        Row(
+                          children: [
+                            Text(
+                              "Doctor :",
+                              style: TextStyle(
+                                color: Colors.black38,
+                                fontSize: 15,
                               ),
-                            ],
-                          ),
-                          SizedBox(
-                            width: 15,
-                          ),
-                        ],
-                      ),
-                      SizedBox(height: 10),
-                      SizedBox(
-                        height: 50,
-                        child: RaisedButton(
-                          onPressed: () {
-                            getImage(context);
-                          },
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(10),
-                          ),
-                          color: Colors.white,
-                          child: Center(
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Icon(
-                                  Icons.upload,
-                                  color: Colors.deepPurple[100],
+                            ),
+                            SizedBox(
+                              width: 15,
+                            ),
+                            CircleAvatar(
+                              backgroundImage:
+                                  NetworkImage(doctorModel.avatarUrl),
+                              maxRadius: 15,
+                            ),
+                            SizedBox(
+                              width: 10,
+                            ),
+                            Text(
+                              doctorModel.full_name,
+                              style: TextStyle(
+                                color: Colors.black,
+                                fontSize: 15,
+                              ),
+                            ),
+                          ],
+                        ),
+                        ExpansionTile(
+                          title: Text("Desription :"),
+                          children: [
+                            Text(appoinment.meetingDescription.toString()),
+                          ],
+                        ),
+                        SizedBox(
+                          height: 5,
+                        ),
+                        SizedBox(
+                          height: 10,
+                        ),
+                        Divider(),
+                        Row(
+                          children: [
+                            Icon(Icons.attachment_rounded, color: Colors.black87),
+                            SizedBox(
+                              width: 15,
+                            ),
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: const [
+                                Text(
+                                  "Attachments",
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.black38,
+                                    fontSize: 20,
+                                  ),
                                 ),
                                 Text(
-                                  "Upload MRI",
-                                  style: TextStyle(color: Colors.black87),
+                                  "This Section To Upload MRI Image",
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.black38,
+                                    fontSize: 10,
+                                  ),
                                 ),
                               ],
                             ),
+                            SizedBox(
+                              width: 15,
+                            ),
+                          ],
+                        ),
+                        SizedBox(height: 10),
+                        SizedBox(
+                          height: 50,
+                          child: RaisedButton(
+                            onPressed: () {
+                              getImage(context);
+                            },
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                            color: Colors.white,
+                            child: Center(
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Icon(
+                                    Icons.upload,
+                                    color: Colors.deepPurple[100],
+                                  ),
+                                  Text(
+                                    "Upload MRI",
+                                    style: TextStyle(color: Colors.black87),
+                                  ),
+                                ],
+                              ),
+                            ),
                           ),
                         ),
-                      ),
-                      SizedBox(height: 10),
-                      Divider(),
-                      Row(
-                        children: [
-                          Icon(Icons.connect_without_contact_outlined,
-                              color: Colors.black87),
-                          SizedBox(
-                            width: 15,
-                          ),
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: const [
-                              Text(
-                                "Communication",
-                                style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.black38,
-                                  fontSize: 20,
-                                ),
-                              ),
-                              Text(
-                                "This Section To Communicate With Doctor",
-                                style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.black38,
-                                  fontSize: 10,
-                                ),
-                              ),
-                            ],
-                          ),
-                          SizedBox(
-                            width: 15,
-                          ),
-                        ],
-                      ),
-                      SizedBox(height: 10),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          SizedBox(
-                            height: 50,
-                            child: RaisedButton(
-                              onPressed: () {
-                                startChat();
-                                Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) => Chat()));
-                              },
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(10),
-                              ),
-                              color: Colors.deepPurple[100],
-                              child: Center(
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Icon(
-                                      Icons.chat_bubble_outline,
-                                      color: Colors.black87,
-                                    ),
-                                    SizedBox(
-                                      width: 5,
-                                    ),
-                                    Text(
-                                      "Chat",
-                                      style: TextStyle(color: Colors.black87),
-                                    ),
-                                  ],
-                                ),
+                        SizedBox(
+                          height: 50,
+                          child: RaisedButton(
+                            onPressed: () {
+                              myCubit.uploadMRI(
+                                  meetingId: appoinment.id.toString(), context: context, Mri: image!);
+                            },
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                            color: Colors.white,
+                            child: Center(
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Icon(
+                                    Icons.upload,
+                                    color: Colors.deepPurple[100],
+                                  ),
+                                  Text(
+                                    "Upload",
+                                    style: TextStyle(color: Colors.black87),
+                                  ),
+                                ],
                               ),
                             ),
                           ),
-                          SizedBox(width: 10),
-                          SizedBox(
-                            height: 50,
-                            child: RaisedButton(
-                              onPressed: () {
-                                _launchURL();
-                              },
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(10),
-                              ),
-                              color: Colors.white,
-                              child: Center(
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Icon(
-                                      Icons.voice_chat_outlined,
-                                      color: Colors.deepPurple[100],
-                                    ),
-                                    SizedBox(
-                                      width: 5,
-                                    ),
-                                    Text(
-                                      "Meeting Call",
-                                      style: TextStyle(color: Colors.black87),
-                                    ),
-                                  ],
+                        ),
+                        SizedBox(height: 10),
+                        Divider(),
+                        Row(
+                          children: [
+                            Icon(Icons.connect_without_contact_outlined,
+                                color: Colors.black87),
+                            SizedBox(
+                              width: 15,
+                            ),
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: const [
+                                Text(
+                                  "Communication",
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.black38,
+                                    fontSize: 20,
+                                  ),
+                                ),
+                                Text(
+                                  "This Section To Communicate With Doctor",
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.black38,
+                                    fontSize: 10,
+                                  ),
+                                ),
+                              ],
+                            ),
+                            SizedBox(
+                              width: 15,
+                            ),
+                          ],
+                        ),
+                        SizedBox(height: 10),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            SizedBox(
+                              height: 50,
+                              child: RaisedButton(
+                                onPressed: () {
+                                  startChat();
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) => Chat()));
+                                },
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(10),
+                                ),
+                                color: Colors.deepPurple[100],
+                                child: Center(
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Icon(
+                                        Icons.chat_bubble_outline,
+                                        color: Colors.black87,
+                                      ),
+                                      SizedBox(
+                                        width: 5,
+                                      ),
+                                      Text(
+                                        "Chat",
+                                        style: TextStyle(color: Colors.black87),
+                                      ),
+                                    ],
+                                  ),
                                 ),
                               ),
                             ),
-                          ),
-                        ],
-                      ),
-                      SizedBox(height: 10),
-                      Divider(),
-                      Row(
-                        children: [
-                          Icon(Icons.paste_outlined, color: Colors.black87),
-                          SizedBox(
-                            width: 15,
-                          ),
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: const [
-                              Text(
-                                "Reports",
-                                style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.black38,
-                                  fontSize: 20,
+                            SizedBox(width: 10),
+                            SizedBox(
+                              height: 50,
+                              child: RaisedButton(
+                                onPressed: () {
+                                  _launchURL();
+                                },
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(10),
+                                ),
+                                color: Colors.white,
+                                child: Center(
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Icon(
+                                        Icons.voice_chat_outlined,
+                                        color: Colors.deepPurple[100],
+                                      ),
+                                      SizedBox(
+                                        width: 5,
+                                      ),
+                                      Text(
+                                        "Meeting Call",
+                                        style: TextStyle(color: Colors.black87),
+                                      ),
+                                    ],
+                                  ),
                                 ),
                               ),
-                              Text(
-                                "All doctor reports shows here",
-                                style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.black38,
-                                  fontSize: 10,
-                                ),
-                              ),
-                            ],
-                          ),
-                          SizedBox(
-                            width: 15,
-                          ),
-                        ],
-                      ),
-                      SizedBox(height: 10),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text(
-                            "Not found reports",
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              color: Colors.black38,
-                              fontSize: 20,
                             ),
-                          ),
-                        ],
-                      )
-                    ],
+                          ],
+                        ),
+                        SizedBox(height: 10),
+                        Divider(),
+                        Row(
+                          children: [
+                            Icon(Icons.paste_outlined, color: Colors.black87),
+                            SizedBox(
+                              width: 15,
+                            ),
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: const [
+                                Text(
+                                  "Reports",
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.black38,
+                                    fontSize: 20,
+                                  ),
+                                ),
+                                Text(
+                                  "All doctor reports shows here",
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.black38,
+                                    fontSize: 10,
+                                  ),
+                                ),
+                              ],
+                            ),
+                            SizedBox(
+                              width: 15,
+                            ),
+                          ],
+                        ),
+                        SizedBox(height: 10),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(
+                              "Not found reports",
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                color: Colors.black38,
+                                fontSize: 20,
+                              ),
+                            ),
+                          ],
+                        )
+                      ],
+                    ),
                   ),
                 ),
               ),
@@ -398,8 +428,7 @@ class AppointmentDeteails extends StatelessWidget {
     if (pickedFile != null) {
       image = pickedFile;
       print('image selected. + ' + pickedFile.path);
-      myCubit.uploadMRI(
-          meetingId: appoinment.id.toString(), context: context, Mri: image!);
+
     } else {
       print('No image selected.');
     }

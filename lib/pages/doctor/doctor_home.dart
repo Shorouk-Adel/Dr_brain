@@ -129,7 +129,7 @@ class _DoctorHomeState extends State<DoctorHome> {
             Padding(
               padding: const EdgeInsets.fromLTRB(20, 0, 0, 0),
               child: Text(
-                "Next Patient",
+                "Last Patient",
                 style: TextStyle(
                     color: Colors.deepPurpleAccent,
                     fontSize: 20,

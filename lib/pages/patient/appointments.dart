@@ -9,6 +9,8 @@ import 'package:flutter/material.dart';
 import 'package:graduation_dr_brain/Model/meeting.dart';
 import 'package:graduation_dr_brain/helpers/constants.dart';
 
+import 'Chat/chat.dart';
+
 class PatientAppointment extends StatefulWidget {
   const PatientAppointment({Key? key}) : super(key: key);
 
@@ -45,7 +47,12 @@ class _PatientAppointmentState extends State<PatientAppointment>
                 ),
                 actions: [
                   IconButton(
-                      onPressed: () => Navigator.of(context).pop(),
+                      onPressed: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => Chat()));
+                      },
                       icon: const Icon(Icons.messenger_outlined,
                           color: Colors.black)),
                 ],
